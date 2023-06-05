@@ -2,22 +2,21 @@
   <div class="containerLogin">
     <div class="containerLeft">
       <h1>
-        <img
-          src="https://img.icons8.com/?size=512&id=100051&format=png"
-          alt=""
-        />Podaci
+        <img src="https://img.icons8.com/?size=512&id=100051&format=png" alt="" />Podaci
       </h1>
       <div class="formContainer">
         <h1>Welcome back</h1>
         <p>Welcome back, Please enter your details.</p>
         <div class="buttonContainer">
-          <button  class="sign_in_button" (click)="showSignIn()">Sign in</button>
-          <button class="sign_up_button"(click)="showSignUp()" >Signup</button>
+          <button [ngClass]="signIn ? 'sign_in_button' : 'sign_up_button'" class="sign_in_button"
+            (click)="showSignIn()">Sign in</button>
+          <button [ngClass]="SignUp ? 'sign_in_button_right' : 'sign_up_button'" (click)="showSignUp()">Signup</button>
         </div>
-        
-        <div class="inputContainerSignIn"  *ngIf="signIn">
+        <!-- Login Stuff-->
+        <div class="inputContainerSignIn" *ngIf="signIn">
           <h1>Login</h1>
         </div>
+        <!-- Register Stuff-->
         <div class="inputContainerSignUp" *ngIf="SignUp">
           <h1>Register</h1>
         </div>

@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  signIn: boolean = false;
+
   SignUp: boolean = false;
 
   // showSignIn(){
@@ -18,12 +18,15 @@ export class LoginComponent {
 
   // }
 
-  
+  signIn: boolean = true; // Initialize to true
+
+
+
   showSignIn() {
     if (this.signIn == false) {
       this.signIn = true;
       this.SignUp = false;
-     
+
     } else {
       this.signIn = false;
     }

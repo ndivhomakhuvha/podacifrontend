@@ -4,6 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   .containerLogin {
     height: 600px;
     width: 1100px;
@@ -29,10 +30,12 @@
         display: flex;
         align-items: center;
         flex-direction: column;
+
         p {
           color: rgba(128, 128, 128, 0.456);
           font-size: 12px;
         }
+
         .buttonContainer {
           height: 40px;
           width: 70%;
@@ -42,23 +45,34 @@
           align-items: center;
           justify-content: center;
           gap: 3px;
-         
+
           .sign_in_button {
             flex: 1;
             height: 33px;
             background-color: white;
-            border-radius:10px 0px 0px 10px;
+            border-radius: 10px 0px 0px 10px;
             border: none;
             margin: 5px;
           }
+          .sign_in_button_right{
+            flex: 1;
+            height: 33px;
+            background-color: white;
+            border-radius: 0px 10px 10px 0px;
+            border: none;
+            margin: 5px;
+          }
+
           .sign_up_button {
             flex: 1;
             height: 30px;
             border: none;
             margin: 5px;
+            background-color: #f0eff2;
           }
         }
       }
+
       h1 {
         text-align: center;
         margin-top: 40px;
@@ -73,6 +87,7 @@
         }
       }
     }
+
     .containerRight {
       flex: 1;
       height: 600px;
