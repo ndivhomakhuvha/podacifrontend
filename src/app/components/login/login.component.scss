@@ -6,7 +6,7 @@
   justify-content: center;
 
   .containerLogin {
-    height: 600px;
+    height: 650px;
     width: 1100px;
     display: flex;
     align-items: center;
@@ -16,7 +16,7 @@
 
     .containerLeft {
       border-radius: 10px 0px 0px 10px;
-      height: 600px;
+      height: 650px;
       flex: 1;
       display: flex;
       align-items: center;
@@ -30,6 +30,41 @@
         display: flex;
         align-items: center;
         flex-direction: column;
+
+        .inputContainerSignIn {
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          width: 100%;
+          margin-top: 10px;
+          gap: 5px;
+
+          .inputContainer {
+            height: 45px;
+            width: 70%;
+            border: 1px solid rgba(128, 128, 128, 0.342);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+          }
+
+          button {
+            height: 50px;
+            width: 70%;
+            background-color: #0366ff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            outline: none;
+            gap: 3px;
+          }
+        }
+
 
         p {
           color: rgba(128, 128, 128, 0.456);
@@ -54,7 +89,8 @@
             border: none;
             margin: 5px;
           }
-          .sign_in_button_right{
+
+          .sign_in_button_right {
             flex: 1;
             height: 33px;
             background-color: white;
@@ -90,7 +126,7 @@
 
     .containerRight {
       flex: 1;
-      height: 600px;
+      height: 650px;
       background: url(https://images.unsplash.com/photo-1544380904-c686aad2fc40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1160&q=80);
       background-size: cover;
       background-repeat: no-repeat;
