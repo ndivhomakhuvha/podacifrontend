@@ -66,7 +66,7 @@ export class OTPPageComponent {
 
     this.userService.resendOTP(object).subscribe({
       next: (data) => {
-        localStorage.setItem('userOTP', JSON.stringify(data));
+        localStorage.setItem('user', JSON.stringify(data));
         this.oldOTP = false;
         this.newOTP = true;
         this.ngOnInit();

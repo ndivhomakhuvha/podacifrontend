@@ -6,5 +6,6 @@ export const environment = {
 };
 export const developmentURI = {
   loginUserURI: `${environment.user}/sign`,
-  registerUserURI: `${environment.user}`
+  registerUserURI: `${environment.user}`,
+  resendOTPURI: `${environment.user}/resend`
 }

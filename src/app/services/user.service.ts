@@ -16,6 +16,6 @@ export class UserService {
     return this.http.post<UserRegister>(developmentURI.registerUserURI,User);
   }
   resendOTP(email: any): Observable<OTP> {
-    return this.http.post<OTP>(developmentURI.loginUserURI, email);
+    return this.http.post<OTP>(developmentURI.resendOTPURI, email);
   }
 }

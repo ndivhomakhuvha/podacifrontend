@@ -1,6 +1,6 @@
 .containerOTP {
   height: 600px;
-  margin-top: 100px;
+  margin-top: 50px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -14,12 +14,13 @@
 
   .alert-danger {
     margin-top: 20px;
-    width: 30%;
+    width: 25%;
+    text-align: center;
   }
   .alert {
   }
   h1 {
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .resend {
@@ -47,12 +48,15 @@
       width: 130px;
       border-radius: 5px;
       background-color: rgba(6, 207, 6, 0.355);
-    
+
       border: none;
       color: rgb(4, 156, 4);
       outline: 1px solid rgb(4, 156, 4);
       font-weight: 500;
       padding: 5px;
+    }
+    .resendButtonSubmit:hover{
+      box-shadow: 0px 10px 36px rgba(0, 0, 0, 0.125);
     }
   }
 
@@ -98,7 +102,8 @@
       height: 75px;
       border-radius: 10px;
       text-align: center;
-      border: 1px solid rgb(149, 3, 3);
+      border: unset;
+      outline: 1px solid rgba(247, 14, 14, 0.373);
     }
   }
 }
