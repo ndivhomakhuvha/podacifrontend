@@ -12,6 +12,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 9px;
+    margin-top: 50px;
     box-shadow: 0px 10px 36px rgba(0, 0, 0, 0.107);
 
     .containerLeft {
@@ -25,8 +26,7 @@
       .formContainer {
         height: 400px;
         width: 70%;
-
-        margin-top: 100px;
+        margin-top: 30px;
         display: flex;
         align-items: center;
         flex-direction: column;
@@ -38,21 +38,78 @@
           width: 100%;
           margin-top: 10px;
           gap: 5px;
-
+          form {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            margin-top: 10px;
+            gap: 5px;
+            .error{
+              color: red;
+              width: 90%;
+            }
+          }
           .inputContainer {
-            height: 45px;
-            width: 70%;
+            height: 55px;
+            width: 90%;
             border: 1px solid rgba(128, 128, 128, 0.342);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 3px;
+            gap: 10px;
+            z-index: 1;
+            padding: 10px;
+            position: relative;
+            input {
+              width: 70%;
+              height: 25px;
+              position: relative;
+              outline: none;
+              border: unset;
+              border-left: 1px solid grey;
+              padding: 10px;
+              font-size: 14px;
+            }
+            .iconContainer {
+              height: 30px;
+              width: 30px;
+              position: absolute;
+              left: 10px;
+              border-radius: 5px;
+              box-shadow: 0px 10px 36px rgba(0, 0, 0, 0.132);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              outline: 1px solid rgba(128, 128, 128, 0.2);
+            }
+            input::placeholder {
+              color: rgba(128, 128, 128, 0.976);
+              font-size: 14px;
+            }
+            input:-webkit-autofill,
+            input:-webkit-autofill:hover,
+            input:-webkit-autofill:focus,
+            input:-webkit-autofill:active {
+              -webkit-box-shadow: 0 0 0 30px white inset !important;
+            }
+
+            ion-icon {
+              font-size: 20px;
+              position: relative;
+            }
+            .valid {
+              color: green;
+            }
+            .invalid {
+              color: red;
+            }
           }
 
           button {
             height: 50px;
-            width: 70%;
+            width: 90%;
             background-color: #0366ff;
             color: white;
             border: none;
@@ -63,8 +120,10 @@
             outline: none;
             gap: 3px;
           }
+          button:hover {
+            background-color: #044ab3;
+          }
         }
-
 
         p {
           color: rgba(128, 128, 128, 0.456);
@@ -73,7 +132,7 @@
 
         .buttonContainer {
           height: 40px;
-          width: 70%;
+          width: 90%;
           background-color: #f0eff2;
           border-radius: 10px;
           display: flex;

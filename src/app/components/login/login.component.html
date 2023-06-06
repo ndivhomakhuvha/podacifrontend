@@ -2,25 +2,204 @@
   <div class="containerLogin">
     <div class="containerLeft">
       <h1>
-        <img src="https://img.icons8.com/?size=512&id=100051&format=png" alt="" />Podaci
+        <img
+          src="https://img.icons8.com/?size=512&id=100051&format=png"
+          alt=""
+        />Podaci
       </h1>
       <div class="formContainer">
-        <h1>Welcome back</h1>
+        <h1 *ngIf="signIn">Login Here</h1>
+        <h1 *ngIf="SignUp">Register Account</h1>
         <p>Welcome back, Please enter your details.</p>
         <div class="buttonContainer">
-          <button [ngClass]="signIn ? 'sign_in_button' : 'sign_up_button'" class="sign_in_button"
-            (click)="showSignIn()">Sign in</button>
-          <button [ngClass]="SignUp ? 'sign_in_button_right' : 'sign_up_button'" (click)="showSignUp()">Signup</button>
+          <button
+            [ngClass]="signIn ? 'sign_in_button' : 'sign_up_button'"
+            class="sign_in_button"
+            (click)="showSignIn()"
+          >
+            Sign in
+          </button>
+          <button
+            [ngClass]="SignUp ? 'sign_in_button_right' : 'sign_up_button'"
+            (click)="showSignUp()"
+          >
+            Signup
+          </button>
         </div>
         <!-- Login Stuff-->
         <div class="inputContainerSignIn" *ngIf="signIn">
-          <div class="inputContainer"></div>
-          <div class="inputContainer"></div>
-          <button>Login</button>
+          <form
+            *ngIf="form"
+            [formGroup]="form"
+            (ngSubmit)="submitForm()"
+            autocomplete="off"
+          >
+            <div class="inputContainer">
+              <div class="iconContainer">
+                <ion-icon name="mail-outline"></ion-icon>
+              </div>
+
+              <input
+                type="email"
+                formControlName="email"
+                placeholder="Email Address"
+                autocomplete="false"
+              />
+              <ion-icon
+                name="checkmark-circle"
+                class="invalid"
+                *ngIf="form.get('email')?.invalid"
+              ></ion-icon>
+              <ion-icon
+                name="checkmark-circle"
+                class="valid"
+                *ngIf="form.get('email')?.valid"
+              ></ion-icon>
+            </div>
+            <div
+              *ngIf="
+                form.get('email')?.invalid &&
+                (form.get('email')?.dirty || form.get('email')?.touched)
+              "
+              class="formValidation"
+            ></div>
+
+            <div *ngIf="form.get('email')?.errors?.['email']" class="error">
+              Invalid email format.
+            </div>
+
+            <div class="inputContainer">
+              <div class="iconContainer">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+              </div>
+
+              <input
+                type="password"
+                placeholder="Password"
+                id="password"
+                formControlName="password"
+                autocomplete="false"
+              />
+              <ion-icon
+                name="eye-outline"
+                (click)="showOrHide()"
+                id="ion"
+              ></ion-icon>
+            </div>
+            <div
+              *ngIf="
+                form.get('password')?.invalid &&
+                (form.get('password')?.dirty || form.get('password')?.touched)
+              "
+              class="formValidation"
+            ></div>
+            <div
+              *ngIf="form.get('password')?.errors?.['minlength']"
+              class="error"
+            >
+              Password should have at least 8 characters.
+            </div>
+
+            <button>Login</button>
+          </form>
         </div>
+
         <!-- Register Stuff-->
-        <div class="inputContainerSignUp" *ngIf="SignUp">
-          <h1>Register</h1>
+        <div class="inputContainerSignIn" *ngIf="SignUp">
+          <form
+            *ngIf="formRegister"
+            [formGroup]="formRegister"
+            (ngSubmit)="submitFormRegister()"
+            autocomplete="off"
+          >
+            <div class="inputContainer">
+              <div class="iconContainer">
+                <ion-icon name="person-outline"></ion-icon>
+              </div>
+
+              <input
+                type="email"
+                formControlName="username"
+                placeholder="Username"
+                autocomplete="false"
+              />
+              <ion-icon name="person" class="invalid"  *ngIf="formRegister.get('username')?.invalid"></ion-icon>
+              <ion-icon name="person" class="valid"  *ngIf="formRegister.get('username')?.valid"></ion-icon>
+            </div>
+            <div
+            *ngIf="formRegister.get('username')?.errors?.['minlength']"
+            class="error"
+          >
+           Username should be atleast 4 Characters
+          </div>
+         
+
+            <div class="inputContainer">
+              <div class="iconContainer">
+                <ion-icon name="mail-outline"></ion-icon>
+              </div>
+
+              <input
+                type="email"
+                formControlName="email"
+                placeholder="Email Address"
+                autocomplete="false"
+              />
+              <ion-icon
+                name="checkmark-circle"
+                class="invalid"
+                *ngIf="formRegister.get('email')?.invalid"
+              ></ion-icon>
+              <ion-icon
+                name="checkmark-circle"
+                class="valid"
+                *ngIf="formRegister.get('email')?.valid"
+              ></ion-icon>
+            </div>
+            <div
+              *ngIf="
+                formRegister.get('email')?.invalid &&
+                (formRegister.get('email')?.dirty ||
+                  formRegister.get('email')?.touched)
+              "
+              class="formValidation"
+            ></div>
+
+            <div
+              *ngIf="formRegister.get('email')?.errors?.['email']"
+              class="error"
+            >
+              Invalid email format.
+            </div>
+
+            <div class="inputContainer">
+              <div class="iconContainer">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+              </div>
+
+              <input
+                type="password"
+                placeholder="Password"
+                id="password"
+                formControlName="password"
+                autocomplete="false"
+              />
+              <ion-icon
+                name="eye-outline"
+                (click)="showOrHide()"
+                id="ion"
+              ></ion-icon>
+            </div>
+
+            <div
+              *ngIf="formRegister.get('password')?.errors?.['minlength']"
+              class="error"
+            >
+              Password should have at least 8 characters.
+            </div>
+
+            <button>Login</button>
+          </form>
         </div>
       </div>
     </div>
