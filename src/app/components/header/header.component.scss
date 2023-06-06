@@ -1,4 +1,4 @@
-header{
+header {
   position: fixed;
   top: 0;
   z-index: 9999;
@@ -7,4 +7,13 @@ header{
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.159);
   box-shadow: 0px 10px 36px rgba(147, 147, 147, 0.132);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-evenly;
+
+
+  img {
+    height: 40px;
+  }
 }
