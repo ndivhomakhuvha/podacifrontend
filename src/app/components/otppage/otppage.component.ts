@@ -15,7 +15,7 @@ export class OTPPageComponent {
   email: String = '';
   userString: any;
   user?: OTP;
-  constructor(private router: Router, private userService: UserService) {}
+  constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit() {
     this.userString = localStorage.getItem('user');
@@ -67,6 +67,7 @@ export class OTPPageComponent {
     this.userService.resendOTP(object).subscribe({
       next: (data) => {
         localStorage.setItem('user', JSON.stringify(data));
+        this.wrongOTP = false;
         this.oldOTP = false;
         this.newOTP = true;
         this.ngOnInit();
@@ -75,6 +76,7 @@ export class OTPPageComponent {
         this.oldOTP = false;
         this.newOTP = false;
         console.log(err);
+        this.wrongOTP = false;
       },
     });
   }
