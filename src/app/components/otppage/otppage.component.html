@@ -1,1 +1,29 @@
-<p>otppage works!</p>
+<div class="containerOTP">
+    <div class="cont" *ngIf="oldOTP || newOTP">
+        <img src="https://cdn.dribbble.com/users/1751799/screenshots/5512482/media/1cbd3594bb5e8d90924a105d4aae924c.gif" alt="">
+    </div>
+    <div class="alert alert-success" role="alert" *ngIf="oldOTP">
+      
+        
+        OTP has been sent to your email: {{ email }}
+    </div>
+    <div class="alert alert-success" role="alert" *ngIf="newOTP">
+        OTP has been resent to your email: {{ email }}
+    </div>
+    <h1>Enter OTP to Verify</h1>
+    <div class="inputOTP">
+        <input type="text" maxlength="1" (keyup)="moveNext()">
+        <input type="text" maxlength="1" (keyup)="moveNext()">
+        <input type="text" maxlength="1" (keyup)="moveNext()">
+        <input type="text" maxlength="1">
+    </div>
+    <div class="resend">
+        <button (click)="submit()" class="resendButtonSubmit">Submit</button>
+        <button class="resendButton" (click)="resendOTP()">Resend OTP</button>
+    </div>
+
+    <div class="alert alert-danger" role="alert" *ngIf="wrongOTP">
+        You entered a wrong OTP
+    </div>
+
+</div>

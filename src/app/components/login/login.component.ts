@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -11,11 +12,18 @@ export class LoginComponent {
   SignUp: boolean = false;
   form: FormGroup;
   formRegister: FormGroup;
-  signIn: boolean = true; 
+  signIn: boolean = true;
   passwordHidden: boolean = false;
   creditsFalse: boolean = false;
+  registered: boolean = false;
+  accountExists: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private userService: UserService,
+    private cdr: ChangeDetectorRef
+  ) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
@@ -40,7 +48,7 @@ export class LoginComponent {
     if (this.SignUp == false) {
       this.SignUp = true;
       this.signIn = false;
-      this.form.clearValidators()
+      this.form.clearValidators();
     } else {
       this.SignUp = false;
     }
@@ -61,9 +69,26 @@ export class LoginComponent {
     }
   }
   submitForm() {
-    console.log(this.form.value);
+    this.userService.LoginUser(this.form.value).subscribe({
+      next: (data) => {
+        localStorage.setItem('user', JSON.stringify(data));
+        this.router.navigate(['/otp'])
+      },
+      error: (err) => {
+        this.creditsFalse = true;
+      },
+    });
   }
   submitFormRegister() {
-    console.log(this.formRegister.value);
+    this.userService.RegisterUser(this.formRegister.value).subscribe({
+      next: (data) => {
+        this.registered = true;
+        this.accountExists = false;
+      },
+      error: (err) => {
+        this.accountExists = true;
+        this.registered = false;
+      },
+    });
   }
 }

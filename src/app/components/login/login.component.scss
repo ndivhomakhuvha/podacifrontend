@@ -38,6 +38,19 @@
           width: 100%;
           margin-top: 10px;
           gap: 5px;
+          .alert{
+            width: 90%;
+            margin-top: 5px;
+            text-align: center;
+            a {
+          
+              cursor: pointer;
+              color: #0366ff;
+            }
+            a:hover{
+              text-decoration: underline;
+            }
+          }
           form {
             display: flex;
             align-items: center;
@@ -46,8 +59,10 @@
             margin-top: 10px;
             gap: 5px;
             .error{
-              color: red;
+              color: rgb(149, 3, 3);
               width: 90%;
+              font-size: 12px;
+              font-weight: 500;
             }
           }
           .inputContainer {
@@ -68,7 +83,7 @@
               position: relative;
               outline: none;
               border: unset;
-              border-left: 1px solid grey;
+              border-left: 1px solid rgba(128, 128, 128, 0.458);
               padding: 10px;
               font-size: 14px;
             }
@@ -103,7 +118,7 @@
               color: green;
             }
             .invalid {
-              color: red;
+              color: rgb(149, 3, 3);
             }
           }
 

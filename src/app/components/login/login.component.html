@@ -102,6 +102,14 @@
 
             <button>Login</button>
           </form>
+
+          <div
+            class="alert alert-danger"
+            role="alert"
+            *ngIf="creditsFalse == true"
+          >
+            Entered wrong credits!
+          </div>
         </div>
 
         <!-- Register Stuff-->
@@ -123,16 +131,23 @@
                 placeholder="Username"
                 autocomplete="false"
               />
-              <ion-icon name="person" class="invalid"  *ngIf="formRegister.get('username')?.invalid"></ion-icon>
-              <ion-icon name="person" class="valid"  *ngIf="formRegister.get('username')?.valid"></ion-icon>
+              <ion-icon
+                name="person"
+                class="invalid"
+                *ngIf="formRegister.get('username')?.invalid"
+              ></ion-icon>
+              <ion-icon
+                name="person"
+                class="valid"
+                *ngIf="formRegister.get('username')?.valid"
+              ></ion-icon>
             </div>
             <div
-            *ngIf="formRegister.get('username')?.errors?.['minlength']"
-            class="error"
-          >
-           Username should be atleast 4 Characters
-          </div>
-         
+              *ngIf="formRegister.get('username')?.errors?.['minlength']"
+              class="error"
+            >
+              Username should be atleast 4 Characters
+            </div>
 
             <div class="inputContainer">
               <div class="iconContainer">
@@ -198,8 +213,15 @@
               Password should have at least 8 characters.
             </div>
 
-            <button>Login</button>
+            <button>Register</button>
           </form>
+         
+          <div class="alert alert-success" role="alert"  *ngIf="registered">
+            Account registered!  <a (click)="showSignIn()">Login here</a>
+          </div>
+          <div class="alert alert-danger" role="alert" *ngIf="accountExists">
+            Account Already Exists!
+          </div>
         </div>
       </div>
     </div>
