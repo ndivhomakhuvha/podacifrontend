@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
@@ -80,10 +80,14 @@ export class LoginComponent {
     });
   }
   submitFormRegister() {
+
     this.userService.RegisterUser(this.formRegister.value).subscribe({
       next: (data) => {
         this.registered = true;
         this.accountExists = false;
+        Object.keys(this.formRegister.controls).forEach(key => {
+          this.formRegister.controls[key].setValue('');
+        });
       },
       error: (err) => {
         this.accountExists = true;
