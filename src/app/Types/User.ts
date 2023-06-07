@@ -11,4 +11,5 @@ export interface OTP {
   email: string;
   username: string;
   number: number;
+  userId: number
 }

@@ -1,1 +1,163 @@
-<p>dashboard works!</p>
+<div class="dashboard_container">
+  <div class="left_dashboard">
+    <div class="sidebar_logo">
+      <h1>
+        <img
+          src="https://img.icons8.com/?size=512&id=100051&format=png"
+          alt=""
+        />
+        Podaci
+      </h1>
+    </div>
+
+    <div class="sidebar_menu">
+      <p
+        (click)="showHomeMethod()"
+        [ngClass]="showHome ? 'clicked' : 'not_clicked'"
+      >
+        <ion-icon name="home"></ion-icon>Home
+      </p>
+      <p
+        (click)="showServersMethod()"
+        [ngClass]="showServers ? 'clicked' : 'not_clicked'"
+      >
+        <ion-icon name="server"></ion-icon>Servers
+      </p>
+
+      <p
+        (click)="showAnalyticsMethod()"
+        [ngClass]="showAnalytics ? 'clicked' : 'not_clicked'"
+      >
+        <ion-icon name="analytics"></ion-icon>Analytics
+      </p>
+      <p
+        (click)="showSettingsMethod()"
+        [ngClass]="showSettings ? 'clicked' : 'not_clicked'"
+      >
+        <ion-icon name="settings"></ion-icon>Settings
+      </p>
+    </div>
+    <div class="sidebar_footer">
+      <p><ion-icon name="information-circle"></ion-icon>Help & Information</p>
+      <p><ion-icon name="log-out"></ion-icon>Log out</p>
+    </div>
+  </div>
+  <div class="middle_dashboard">
+    <div class="home" *ngIf="showHome">
+      <div class="home_top">
+        <div class="home_top_left">
+          <h1>Hello, {{ usernameUser }}</h1>
+          <p>Track your network performance here</p>
+        </div>
+        <div class="home_top_right">
+          <div>
+            <p>{{ formattedDate }}</p>
+          </div>
+          <div class="calender_wrapper">
+            <ion-icon name="calendar"></ion-icon>
+          </div>
+        </div>
+      </div>
+
+      <div class="home_under_top">
+        <div class="inside_under_top">
+          <div class="under_top_container">
+            <ion-icon name="trending-up"></ion-icon>
+          </div>
+          <div class="under_top_information">
+            <h5>Server Up</h5>
+            <div class="under_top_numbering">
+              <h1>{{ serverUpLength }}</h1>
+              <p><ion-icon name="caret-up" class="up"></ion-icon> + 8%</p>
+            </div>
+          </div>
+        </div>
+        <div class="vertical-line"></div>
+        <div class="inside_under_top">
+          <div class="under_top_container">
+            <ion-icon name="trending-down"></ion-icon>
+          </div>
+          <div class="under_top_information">
+            <h5>Server Down</h5>
+            <div class="under_top_numbering">
+              <h1>{{ serverDownLength }}</h1>
+              <p><ion-icon name="caret-down" class="down"></ion-icon> -5%</p>
+            </div>
+          </div>
+        </div>
+        <div class="vertical-line"></div>
+        <div class="inside_under_top">
+          <div class="under_top_container">
+            <ion-icon name="pulse"></ion-icon>
+          </div>
+          <div class="under_top_information">
+            <h5>All Servers</h5>
+            <div class="under_top_numbering">
+              <h1>{{ allServers }}</h1>
+              <p><ion-icon name="cloud-circle" class="all"></ion-icon></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="home_chart">
+        <app-chart></app-chart>
+      </div>
+    </div>
+    <div class="servers" *ngIf="showServers">
+      <h1>This is servers</h1>
+    </div>
+    <div class="analytics" *ngIf="showAnalytics">
+      <h1>This is Analytics</h1>
+    </div>
+    <div class="settings" *ngIf="showSettings">
+      <h1>This is Settings</h1>
+    </div>
+  </div>
+  <div class="right_dashboard">
+    <div class="profile">
+      <div class="picture_container"></div>
+      <h3>{{ username }}</h3>
+      <p>{{ email }}</p>
+      <div class="callingIcons">
+        <div class="cont">
+          <ion-icon name="call"></ion-icon>
+        </div>
+        <div class="cont">
+          <ion-icon name="videocam"></ion-icon>
+        </div>
+        <div class="cont">
+          <ion-icon name="ellipsis-vertical"></ion-icon>
+        </div>
+      </div>
+    </div>
+    <div class="line_container">
+      <div class="line"></div>
+      Activity
+      <div class="line"></div>
+    </div>
+    <div class="chat">
+      <div class="zoho" *ngFor="let message of mymessage; let i = index">
+        <div class="myMessage">
+          {{ message.message }}
+        </div>
+        <div class="chatBox">
+          {{  messages[i]?.message }}
+        </div>
+      </div>
+
+      <form *ngIf="form" [formGroup]="form" (ngSubmit)="chatWithGpt()">
+        <div class="inputBox">
+          <ion-icon name="attach"></ion-icon>
+          <input
+            type="text"
+            placeholder="Enter Query"
+            formControlName="message"
+          />
+
+          <ion-icon name="send" type="submit"></ion-icon>
+          <ion-icon name="mic"></ion-icon>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

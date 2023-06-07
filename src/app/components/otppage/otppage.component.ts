@@ -33,7 +33,6 @@ export class OTPPageComponent {
     }
     if (string === String(this.user?.number)) {
       this.router.navigate(['/dashboard']);
-      localStorage.clear();
     } else {
       this.wrongOTP = true;
       this.oldOTP = false;
