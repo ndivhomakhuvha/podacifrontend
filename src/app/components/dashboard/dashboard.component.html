@@ -2,38 +2,23 @@
   <div class="left_dashboard">
     <div class="sidebar_logo">
       <h1>
-        <img
-          src="https://img.icons8.com/?size=512&id=100051&format=png"
-          alt=""
-        />
+        <img src="https://img.icons8.com/?size=512&id=100051&format=png" alt="" />
         Podaci
       </h1>
     </div>
 
     <div class="sidebar_menu">
-      <p
-        (click)="showHomeMethod()"
-        [ngClass]="showHome ? 'clicked' : 'not_clicked'"
-      >
+      <p (click)="showHomeMethod()" [ngClass]="showHome ? 'clicked' : 'not_clicked'">
         <ion-icon name="home"></ion-icon>Home
       </p>
-      <p
-        (click)="showServersMethod()"
-        [ngClass]="showServers ? 'clicked' : 'not_clicked'"
-      >
+      <p (click)="showServersMethod()" [ngClass]="showServers ? 'clicked' : 'not_clicked'">
         <ion-icon name="server"></ion-icon>Servers
       </p>
 
-      <p
-        (click)="showAnalyticsMethod()"
-        [ngClass]="showAnalytics ? 'clicked' : 'not_clicked'"
-      >
+      <p (click)="showAnalyticsMethod()" [ngClass]="showAnalytics ? 'clicked' : 'not_clicked'">
         <ion-icon name="analytics"></ion-icon>Analytics
       </p>
-      <p
-        (click)="showSettingsMethod()"
-        [ngClass]="showSettings ? 'clicked' : 'not_clicked'"
-      >
+      <p (click)="showSettingsMethod()" [ngClass]="showSettings ? 'clicked' : 'not_clicked'">
         <ion-icon name="settings"></ion-icon>Settings
       </p>
     </div>
@@ -141,23 +126,20 @@
           {{ message.message }}
         </div>
         <div class="chatBox">
-          {{  messages[i]?.message }}
+          {{ messages[i]?.message }}
         </div>
       </div>
 
-      <form *ngIf="form" [formGroup]="form" (ngSubmit)="chatWithGpt()">
-        <div class="inputBox">
-          <ion-icon name="attach"></ion-icon>
-          <input
-            type="text"
-            placeholder="Enter Query"
-            formControlName="message"
-          />
 
-          <ion-icon name="send" type="submit"></ion-icon>
-          <ion-icon name="mic"></ion-icon>
-        </div>
-      </form>
     </div>
+    <form *ngIf="form" [formGroup]="form" (ngSubmit)="chatWithGpt()">
+      <div class="inputBox">
+        <ion-icon name="attach"></ion-icon>
+        <input type="text" placeholder="Enter Query" formControlName="message" />
+
+        <ion-icon name="send" type="submit"></ion-icon>
+        <ion-icon name="mic"></ion-icon>
+      </div>
+    </form>
   </div>
 </div>
