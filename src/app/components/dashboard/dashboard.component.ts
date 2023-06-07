@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GPT } from 'src/app/Types/GPT';
+import { Server } from 'src/app/Types/Servers';
 import { OTP } from 'src/app/Types/User';
 import { ChatService } from 'src/app/services/chat.service';
+import { ServerService } from 'src/app/services/server.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -22,6 +24,7 @@ export class DashboardComponent {
   messages: any[] = [];
   mymessage: any[] = [];
   usernameUser: string = ''
+  servers: any;
   username: string = 'GPT-Engineer';
   email: string = '@gptengineer';
   currentDate: Date = new Date();
@@ -39,7 +42,8 @@ export class DashboardComponent {
   constructor(
     private userService: UserService,
     private fb: FormBuilder,
-    private gpt: ChatService
+    private gpt: ChatService,
+    private serverService: ServerService
   ) {
     this.form = this.fb.group({
       message: [''],
@@ -49,8 +53,8 @@ export class DashboardComponent {
     this.userString = localStorage.getItem('user');
     this.user = JSON.parse(this.userString) as OTP;
     this.usernameUser = this.user.username;
-  }
 
+  }
   showHomeMethod() {
     if (this.showHome == false) {
       this.showHome = true;
@@ -67,6 +71,12 @@ export class DashboardComponent {
       this.showAnalytics = false;
       this.showSettings = false;
       this.showHelp = false;
+      this.userString = localStorage.getItem('user');
+      this.user = JSON.parse(this.userString) as OTP;
+      this.usernameUser = this.user.username;
+      this.serverService.getServerById(3).subscribe(data => {
+        this.servers = data;
+      })
     }
   }
   showAnalyticsMethod() {

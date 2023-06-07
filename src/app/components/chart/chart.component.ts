@@ -14,7 +14,7 @@ export class ChartComponent {
       theme: 'light2',
       height: 350,
       width: 900,
-      exportFileName: "Range Spline Area",  //Give any name accordingly
+      exportFileName: "Network Perfomance.pdf",  //Give any name accordingly
       exportEnabled: true,
       title: {
         text: 'Up vs Down Servers',

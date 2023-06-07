@@ -5,7 +5,7 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  overflow: scroll;
+
   .cont {
     img {
       height: 80px;
@@ -17,8 +17,9 @@
     width: 25%;
     text-align: center;
   }
-  .alert {
-  }
+
+  .alert {}
+
   h1 {
     font-weight: 600;
   }
@@ -42,6 +43,7 @@
       color: white;
       padding: 5px;
     }
+
     .resendButtonSubmit {
       margin-top: 10px;
       height: 40px;
@@ -55,7 +57,8 @@
       font-weight: 500;
       padding: 5px;
     }
-    .resendButtonSubmit:hover{
+
+    .resendButtonSubmit:hover {
       box-shadow: 0px 10px 36px rgba(0, 0, 0, 0.125);
     }
   }
@@ -110,6 +113,7 @@
 
 @media (width <=900px) {
   .containerOTP {
+
     .alert,
     .alert-danger {
       text-align: center;

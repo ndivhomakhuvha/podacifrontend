@@ -8,5 +8,6 @@ export const developmentURI = {
   loginUserURI: `${environment.user}/sign`,
   registerUserURI: `${environment.user}`,
   resendOTPURI: `${environment.user}/resend`,
-  chatgpt: `${environment.gpt}`
+  chatgpt: `${environment.gpt}`,
+  serversByID: `${environment.server}`
 }
