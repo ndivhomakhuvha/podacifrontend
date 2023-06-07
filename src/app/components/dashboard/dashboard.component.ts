@@ -21,7 +21,7 @@ export class DashboardComponent {
   user?: OTP;
   messages: any[] = [];
   mymessage: any[] = [];
-  usernameUser: string =''
+  usernameUser: string = ''
   username: string = 'GPT-Engineer';
   email: string = '@gptengineer';
   currentDate: Date = new Date();
@@ -93,7 +93,9 @@ export class DashboardComponent {
     await this.gpt.textGPT(this.form.value).subscribe((data: GPT) => {
       this.messages.push(data);
     });
-    console.log(this.messages)
+    Object.keys(this.form.controls).forEach(key => {
+      this.form.controls[key].setValue('');
+    });
   }
 }
 
