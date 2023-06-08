@@ -2,38 +2,23 @@
   <div class="left_dashboard">
     <div class="sidebar_logo">
       <h1>
-        <img
-          src="https://img.icons8.com/?size=512&id=100051&format=png"
-          alt=""
-        />
+        <img src="https://img.icons8.com/?size=512&id=100051&format=png" alt="" />
         Podaci
       </h1>
     </div>
 
     <div class="sidebar_menu">
-      <p
-        (click)="showHomeMethod()"
-        [ngClass]="showHome ? 'clicked' : 'not_clicked'"
-      >
+      <p (click)="showHomeMethod()" [ngClass]="showHome ? 'clicked' : 'not_clicked'">
         <ion-icon name="home"></ion-icon>Home
       </p>
-      <p
-        (click)="showServersMethod()"
-        [ngClass]="showServers ? 'clicked' : 'not_clicked'"
-      >
+      <p (click)="showServersMethod()" [ngClass]="showServers ? 'clicked' : 'not_clicked'">
         <ion-icon name="server"></ion-icon>Servers
       </p>
 
-      <p
-        (click)="showAnalyticsMethod()"
-        [ngClass]="showAnalytics ? 'clicked' : 'not_clicked'"
-      >
+      <p (click)="showAnalyticsMethod()" [ngClass]="showAnalytics ? 'clicked' : 'not_clicked'">
         <ion-icon name="analytics"></ion-icon>Analytics
       </p>
-      <p
-        (click)="showSettingsMethod()"
-        [ngClass]="showSettings ? 'clicked' : 'not_clicked'"
-      >
+      <p (click)="showSettingsMethod()" [ngClass]="showSettings ? 'clicked' : 'not_clicked'">
         <ion-icon name="settings"></ion-icon>Settings
       </p>
     </div>
@@ -111,6 +96,28 @@
       </div>
     </div>
     <div class="servers" *ngIf="showServers">
+      <div class="navbar">
+        <div class="manage">
+          <h1>Manage Servers</h1>
+        </div>
+        <div class="adding">
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Filter</option>
+            <option value="1">All</option>
+            <option value="2">Active</option>
+            <option value="3">Offline</option>
+          </select>
+
+          <button data-bs-target="#exampleModal" data-bs-toggle="modal" data-backdrop="false"> <ion-icon
+              name="add-circle"></ion-icon>Add
+            Server</button>
+
+
+
+
+          <ion-icon name="print"></ion-icon>
+        </div>
+      </div>
       <table>
         <tr>
           <th>Image</th>
@@ -122,7 +129,7 @@
           <th>Ping</th>
           <th>Actions</th>
         </tr>
-        <tr *ngFor="let row of servers">
+        <tr *ngFor="let row of servers; let index =index">
           <td><img [src]="row.imageurl" alt="" /></td>
           <td>{{ row.ipadress }}</td>
           <td>{{ row.name }}</td>
@@ -140,24 +147,17 @@
           </td>
 
           <td>
-            <div
-              [ngClass]="{
+            <div [ngClass]="{
                 'spinner-border': row.isLoading,
                 'not-visible': !row.isLoading
-              }"
-              role="status"
-            >
+              }" role="status">
               <span class="visually-hidden"></span>
             </div>
-            <img
-              class="ping"
-              [class.not-visible]="row.isLoading"
-              (click)="pingServer(row)"
-              src="https://img.icons8.com/?size=512&id=9928&format=png"
-            />
+            <img class="ping" [class.not-visible]="row.isLoading" (click)="pingServer(row)"
+              src="https://img.icons8.com/?size=512&id=9928&format=png" />
           </td>
           <td>
-            <div class="delete_container" (click)="deleteOneServer(row)">
+            <div class="delete_container" (click)="deleteOneServer(row, index)">
               <ion-icon name="close-circle"></ion-icon>
             </div>
           </td>
@@ -208,15 +208,42 @@
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="chatWithGpt()">
       <div class="inputBox">
         <ion-icon name="attach"></ion-icon>
-        <input
-          type="text"
-          placeholder="Enter Query"
-          formControlName="message"
-        />
+        <input type="text" placeholder="Enter Query" formControlName="message" />
 
         <ion-icon name="send" type="submit"></ion-icon>
         <ion-icon name="mic"></ion-icon>
       </div>
     </form>
   </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add Server</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form *ngIf="formAddServer" [formGroup]="formAddServer" (ngSubmit)="addServer()">
+
+          <div class="modal-body">
+
+            <input type="text" placeholder="Image Address" formControlName="imageurl">
+            <input type="text" placeholder="IP Address" formControlName="ipadress">
+            <input type="text" placeholder="Server name" formControlName="name">
+            <input type="text" placeholder="Server memory" formControlName="memory">
+            <input type="text" placeholder="Server type" formControlName="type">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-dark btn-sm" data-bs-dismiss="modal"><ion-icon
+                name="backspace"></ion-icon></button>
+            <button type="button" class="btn btn-light btn-sm" (click)="addServer()"><ion-icon
+                name="save"></ion-icon>Save</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
 </div>

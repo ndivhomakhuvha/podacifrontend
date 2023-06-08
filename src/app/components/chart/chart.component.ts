@@ -13,7 +13,7 @@ export class ChartComponent {
       animationEnabled: true,
       theme: 'light2',
       height: 250,
-      width: 650,
+      width: 900,
       exportFileName: "Network Perfomance.pdf",  //Give any name accordingly
       exportEnabled: true,
       title: {
@@ -99,5 +99,12 @@ export class ChartComponent {
     this.initializeChart()
     let x = this.initializeChart()
     this.chartString = x.chartOptions;
+    if (window.innerHeight < 968) {
+      x.chartOptions.width = 500;
+    }
+    else {
+      x.chartOptions.width = 900;
+    }
+
   }
 }

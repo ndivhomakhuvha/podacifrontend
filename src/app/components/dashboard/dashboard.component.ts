@@ -7,6 +7,7 @@ import { OTP } from 'src/app/Types/User';
 import { ChatService } from 'src/app/services/chat.service';
 import { ServerService } from 'src/app/services/server.service';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,6 +20,7 @@ export class DashboardComponent {
   showAnalytics: boolean = false;
   showSettings: boolean = false;
   form: FormGroup;
+  formAddServer: FormGroup;
   showHelp: boolean = false;
   server?: Server;
   userString: any;
@@ -43,20 +45,35 @@ export class DashboardComponent {
   allServers: number = this.serverUpLength + this.serverDownLength;
   loading: boolean = false;
 
-  constructor(
-    private userService: UserService,
-    private fb: FormBuilder,
-    private gpt: ChatService,
-    private serverService: ServerService
-  ) {
-    this.form = this.fb.group({
-      message: [''],
-    });
-  }
+
   ngOnInit() {
     this.userString = localStorage.getItem('user');
     this.user = JSON.parse(this.userString) as OTP;
     this.usernameUser = this.user.username;
+  }
+
+  constructor(
+    private userService: UserService,
+    private fb: FormBuilder,
+    private gpt: ChatService,
+    private serverService: ServerService,
+    private router: Router
+  ) {
+    this.form = this.fb.group({
+      message: [''],
+    });
+    this.userString = localStorage.getItem('user');
+    this.user = JSON.parse(this.userString) as OTP;
+
+
+    this.formAddServer = this.fb.group({
+      imageurl: [''],
+      ipadress: [''],
+      name: [''],
+      memory: [''],
+      type: [''],
+      user_id: [this.user?.userId]
+    })
   }
   showHomeMethod() {
     if (this.showHome == false) {
@@ -77,7 +94,7 @@ export class DashboardComponent {
       this.userString = localStorage.getItem('user');
       this.user = JSON.parse(this.userString) as OTP;
       this.usernameUser = this.user.username;
-      this.serverService.getServerById(3).subscribe((data) => {
+      this.serverService.getServerById(this.user.userId).subscribe((data) => {
         this.servers = data;
         console.log(this.servers);
       });
@@ -133,9 +150,8 @@ export class DashboardComponent {
         });
     }, 1500);
   }
-  deleteOneServer(server: Server) {
+  deleteOneServer(server: Server, index: number) {
     this.server = server;
-  
     this.serverService.deleteOneServer(server.server_id).subscribe({
       next: (data) => {
         console.log(data);
@@ -144,5 +160,18 @@ export class DashboardComponent {
         console.log(err);
       },
     });
+    this.servers.splice(index, 1);
+    return this.servers;
+  }
+  addServer() {
+    this.serverService.createServer(this.formAddServer.value).subscribe({
+      next: data => {
+        console.log(data)
+
+      }, error: err => {
+        console.log(err)
+      }
+    })
   }
 }
+

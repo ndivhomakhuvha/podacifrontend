@@ -11,5 +11,6 @@ export const developmentURI = {
   chatgpt: `${environment.gpt}`,
   serversByID: `${environment.server}`,
   pingServer: `${environment.server}/update`,
-  deleteOne: `${environment.server}`
+  deleteOne: `${environment.server}`,
+  createServer: environment.server
 }

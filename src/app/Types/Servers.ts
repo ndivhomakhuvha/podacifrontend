@@ -9,3 +9,12 @@ export interface Server {
     status: string;
     isLoading?: boolean;
 }
+export interface CreateServer {
+    imageurl: string;
+    ipadress: string;
+    name: string;
+    memory: string;
+    type: string;
+    user_id: number;
+}
+
