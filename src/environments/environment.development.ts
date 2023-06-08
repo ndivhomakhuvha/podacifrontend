@@ -9,5 +9,7 @@ export const developmentURI = {
   registerUserURI: `${environment.user}`,
   resendOTPURI: `${environment.user}/resend`,
   chatgpt: `${environment.gpt}`,
-  serversByID: `${environment.server}`
+  serversByID: `${environment.server}`,
+  pingServer: `${environment.server}/update`,
+  deleteOne: `${environment.server}`
 }

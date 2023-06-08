@@ -2,23 +2,38 @@
   <div class="left_dashboard">
     <div class="sidebar_logo">
       <h1>
-        <img src="https://img.icons8.com/?size=512&id=100051&format=png" alt="" />
+        <img
+          src="https://img.icons8.com/?size=512&id=100051&format=png"
+          alt=""
+        />
         Podaci
       </h1>
     </div>
 
     <div class="sidebar_menu">
-      <p (click)="showHomeMethod()" [ngClass]="showHome ? 'clicked' : 'not_clicked'">
+      <p
+        (click)="showHomeMethod()"
+        [ngClass]="showHome ? 'clicked' : 'not_clicked'"
+      >
         <ion-icon name="home"></ion-icon>Home
       </p>
-      <p (click)="showServersMethod()" [ngClass]="showServers ? 'clicked' : 'not_clicked'">
+      <p
+        (click)="showServersMethod()"
+        [ngClass]="showServers ? 'clicked' : 'not_clicked'"
+      >
         <ion-icon name="server"></ion-icon>Servers
       </p>
 
-      <p (click)="showAnalyticsMethod()" [ngClass]="showAnalytics ? 'clicked' : 'not_clicked'">
+      <p
+        (click)="showAnalyticsMethod()"
+        [ngClass]="showAnalytics ? 'clicked' : 'not_clicked'"
+      >
         <ion-icon name="analytics"></ion-icon>Analytics
       </p>
-      <p (click)="showSettingsMethod()" [ngClass]="showSettings ? 'clicked' : 'not_clicked'">
+      <p
+        (click)="showSettingsMethod()"
+        [ngClass]="showSettings ? 'clicked' : 'not_clicked'"
+      >
         <ion-icon name="settings"></ion-icon>Settings
       </p>
     </div>
@@ -66,7 +81,9 @@
             <h5>Server Down</h5>
             <div class="under_top_numbering">
               <h1>{{ serverDownLength }}</h1>
-              <p class="down"><ion-icon name="caret-down" class="down"></ion-icon> -5%</p>
+              <p class="down">
+                <ion-icon name="caret-down" class="down"></ion-icon> -5%
+              </p>
             </div>
           </div>
         </div>
@@ -87,10 +104,65 @@
       <div class="home_chart">
         <app-chart></app-chart>
       </div>
+      <div class="under_chart">
+        <div class="something"></div>
+        <div class="something"></div>
+        <div class="something"></div>
+      </div>
     </div>
     <div class="servers" *ngIf="showServers">
-      <h1>This is servers</h1>
+      <table>
+        <tr>
+          <th>Image</th>
+          <th>IP Address</th>
+          <th>Name</th>
+          <th>Memory</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Ping</th>
+          <th>Actions</th>
+        </tr>
+        <tr *ngFor="let row of servers">
+          <td><img [src]="row.imageurl" alt="" /></td>
+          <td>{{ row.ipadress }}</td>
+          <td>{{ row.name }}</td>
+          <td>{{ row.memory }}</td>
+          <td>{{ row.type }}</td>
+          <td *ngIf="row.status == 'SERVER UP'">
+            <div class="active">
+              <p><ion-icon name="ellipse"></ion-icon>Active</p>
+            </div>
+          </td>
+          <td *ngIf="row.status == 'SERVER DOWN'">
+            <div class="offline">
+              <p><ion-icon name="ellipse"></ion-icon>Offline</p>
+            </div>
+          </td>
 
+          <td>
+            <div
+              [ngClass]="{
+                'spinner-border': row.isLoading,
+                'not-visible': !row.isLoading
+              }"
+              role="status"
+            >
+              <span class="visually-hidden"></span>
+            </div>
+            <img
+              class="ping"
+              [class.not-visible]="row.isLoading"
+              (click)="pingServer(row)"
+              src="https://img.icons8.com/?size=512&id=9928&format=png"
+            />
+          </td>
+          <td>
+            <div class="delete_container" (click)="deleteOneServer(row)">
+              <ion-icon name="close-circle"></ion-icon>
+            </div>
+          </td>
+        </tr>
+      </table>
     </div>
     <div class="analytics" *ngIf="showAnalytics">
       <h1>This is Analytics</h1>
@@ -124,7 +196,7 @@
     <div class="chat">
       <div class="zoho" *ngFor="let message of mymessage; let i = index">
         <div class="myMessage">
-          <p class="user"> {{usernameUser}}</p>
+          <p class="user">{{ usernameUser }}</p>
           {{ message.message }}
         </div>
         <div class="chatBox">
@@ -132,13 +204,15 @@
           {{ messages[i]?.message }}
         </div>
       </div>
-
-
     </div>
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="chatWithGpt()">
       <div class="inputBox">
         <ion-icon name="attach"></ion-icon>
-        <input type="text" placeholder="Enter Query" formControlName="message" />
+        <input
+          type="text"
+          placeholder="Enter Query"
+          formControlName="message"
+        />
 
         <ion-icon name="send" type="submit"></ion-icon>
         <ion-icon name="mic"></ion-icon>

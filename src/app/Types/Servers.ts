@@ -7,4 +7,5 @@ export interface Server {
     memory: string;
     type: string;
     status: string;
+    isLoading?: boolean;
 }

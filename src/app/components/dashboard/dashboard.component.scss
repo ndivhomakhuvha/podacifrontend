@@ -82,12 +82,23 @@
     .home {
       margin: 30px;
 
+      .under_chart {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
 
+        .something {
+          height: 100px;
+          margin-top: 10px;
+          flex: 1;
+          border: 1px solid rgba(160, 160, 160, 0.35);
+          border-radius: 5px;
+        }
+      }
       .home_chart {
         width: 100% !important;
-        height: 400px;
+        height: 250px;
         margin-top: 50px;
-
       }
 
       h1 {
@@ -173,12 +184,10 @@
           }
 
           .under_top_information {
-
             display: flex;
             flex-direction: column;
             /* align-items: center; */
             width: 150px;
-
 
             h1,
             h2,
@@ -234,7 +243,104 @@
     }
 
     .servers {
-      margin: 30px;
+     padding: 10px;
+      width: 100%;
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        cursor: pointer;
+        .spinner-border{
+          height: 20px;
+          width: 20px;
+        }
+        .not-visible{
+          display: none;
+        }
+        .ping{
+          max-height: 25px;
+          transition: .5s ease-in-out;
+        }
+        .ping:hover{
+          transform: scale(1.05);
+
+        }
+        .delete_container {
+          height: 30px;
+          width: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          background-color: rgba(255, 0, 0, 0.169);
+        }
+        .active,
+        .offline {
+          height: 20px;
+          width: 60px;
+          border-radius: 20px;
+          font-size: 12px;
+        }
+        .active{
+          background-color: #e7f9ef;
+          outline: 1px solid #bdecd2;
+
+          p{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            font-weight: 400;
+            ion-icon{
+              font-size: 12px;
+              color: green;
+            }
+          }
+        }
+        .offline{
+          background-color: #edeff5;
+          outline: 1px solid #a4a5a6;
+          p{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            font-weight: 400;
+            ion-icon{
+              font-size: 12px;
+              color: grey;
+            }
+          }
+        }
+        ion-icon {
+          font-size: 20px;
+          color: red;
+        }
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      tr:hover {
+        background-color: #e2e2e2;
+      }
+
+      img {
+        max-height: 30px;
+        border-radius: 5px;
+      }
     }
 
     .analytics {
@@ -250,8 +356,6 @@
     flex: 1.5;
     border-left: 1px solid rgba(128, 128, 128, 0.105);
     position: relative;
-
-
 
     form {
       padding: 10px;
@@ -302,7 +406,6 @@
       overflow-y: scroll;
 
       .zoho {
-
         height: auto;
         width: 95%;
         overflow: auto;
@@ -342,8 +445,6 @@
           margin: 0 !important;
         }
       }
-
-
     }
 
     .profile {
@@ -357,8 +458,6 @@
       align-items: center;
       flex-direction: column;
       justify-content: center;
-
-
 
       .callingIcons {
         display: flex;

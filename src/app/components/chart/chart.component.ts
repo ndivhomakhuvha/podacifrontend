@@ -12,8 +12,8 @@ export class ChartComponent {
     let chartOptions = {
       animationEnabled: true,
       theme: 'light2',
-      height: 350,
-      width: 900,
+      height: 250,
+      width: 650,
       exportFileName: "Network Perfomance.pdf",  //Give any name accordingly
       exportEnabled: true,
       title: {
