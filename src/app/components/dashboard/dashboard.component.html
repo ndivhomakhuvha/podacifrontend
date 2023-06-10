@@ -53,7 +53,7 @@
             <h5>Server Up</h5>
             <div class="under_top_numbering">
               <h1>{{ serverUpLength }}</h1>
-              <p><ion-icon name="caret-up" class="up"></ion-icon> + 8%</p>
+              <p><ion-icon name="caret-up" class="up"></ion-icon> {{upPercent.toFixed()}}%</p>
             </div>
           </div>
         </div>
@@ -67,7 +67,7 @@
             <div class="under_top_numbering">
               <h1>{{ serverDownLength }}</h1>
               <p class="down">
-                <ion-icon name="caret-down" class="down"></ion-icon> -5%
+                <ion-icon name="caret-down" class="down"></ion-icon> {{downPercent.toFixed()}}%
               </p>
             </div>
           </div>
@@ -81,7 +81,7 @@
             <h5>All Servers</h5>
             <div class="under_top_numbering">
               <h1>{{ allServers }}</h1>
-              <p><ion-icon name="cloud-circle" class="all"></ion-icon></p>
+              <p class="all"><ion-icon name="cloud-circle" class="all_icon"></ion-icon>{{allPercent.toFixed()}}%</p>
             </div>
           </div>
         </div>
@@ -140,7 +140,7 @@
               <p><ion-icon name="ellipse"></ion-icon>Active</p>
             </div>
           </td>
-          <td *ngIf="row.status == 'SERVER DOWN'">
+          <td *ngIf="row.status == 'SERVER DOWN' || row.status == null">
             <div class="offline">
               <p><ion-icon name="ellipse"></ion-icon>Offline</p>
             </div>
@@ -220,8 +220,11 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
+          <img
+            src="https://res.cloudinary.com/dxnpgxqlg/image/upload/v1686408181/original-b47fd46878972efc7d4283cef54dc984-removebg-preview_yzagsb.png"
+            alt="">
           <h1 class="modal-title fs-5" id="exampleModalLabel">Add Server</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
         </div>
         <form *ngIf="formAddServer" [formGroup]="formAddServer" (ngSubmit)="addServer()">
 
@@ -235,10 +238,8 @@
 
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-dark btn-sm" data-bs-dismiss="modal"><ion-icon
-                name="backspace"></ion-icon></button>
-            <button type="button" class="btn btn-light btn-sm" (click)="addServer()"><ion-icon
-                name="save"></ion-icon>Save</button>
+
+            <button type="button" class="btn" (click)="addServer()"><ion-icon name="save"></ion-icon>Save</button>
           </div>
         </form>
 

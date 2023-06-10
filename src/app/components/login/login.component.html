@@ -9,8 +9,7 @@
         <h1 *ngIf="SignUp">Register Account</h1>
         <p>Welcome back, Please enter your details.</p>
         <div class="buttonContainer">
-          <button [ngClass]="signIn ? 'sign_in_button' : 'sign_up_button'" class="sign_in_button"
-            (click)="showSignIn()">
+          <button [ngClass]="signIn ? 'sign_in_button' : 'sign_up_button'" (click)="showSignIn()">
             Sign in
           </button>
           <button [ngClass]="SignUp ? 'sign_in_button_right' : 'sign_up_button'" (click)="showSignUp()">
@@ -45,7 +44,7 @@
 
               <input type="password" placeholder="Password" id="password" formControlName="password"
                 autocomplete="false" />
-              <ion-icon name="eye-outline" (click)="showOrHide()" id="ion"></ion-icon>
+              <ion-icon name="eye-off-outline" (click)="showOrHide()" id="ion"></ion-icon>
             </div>
             <div *ngIf="
                 form.get('password')?.invalid &&

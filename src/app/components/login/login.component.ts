@@ -61,11 +61,11 @@ export class LoginComponent {
     if (this.passwordHidden == false) {
       this.passwordHidden = true;
       password?.setAttribute('type', 'text');
-      ion?.setAttribute('name', 'eye-off-outline');
+      ion?.setAttribute('name', 'eye-outline');
     } else {
       this.passwordHidden = false;
       password?.setAttribute('type', 'password');
-      ion?.setAttribute('name', 'eye-outline');
+      ion?.setAttribute('name', 'eye-off-outline');
     }
   }
   submitForm() {

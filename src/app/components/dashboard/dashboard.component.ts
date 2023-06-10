@@ -31,6 +31,8 @@ export class DashboardComponent {
   servers: Server[] = [];
   username: string = 'GPT-Engineer';
   email: string = '@gptengineer';
+  upPercent: number = 0;
+  downPercent: number = 0;
   currentDate: Date = new Date();
   day: number = this.currentDate.getDate();
   month: string = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(
@@ -40,9 +42,10 @@ export class DashboardComponent {
 
   formattedDate: string = `${this.day}, ${this.month} ${this.year}`;
 
-  serverUpLength: number = 10;
-  serverDownLength: number = 5;
-  allServers: number = this.serverUpLength + this.serverDownLength;
+  serverUpLength: number = 0;
+  serverDownLength: number = 0;
+  allServers: number = 0;
+  allPercent: number = 0;
   loading: boolean = false;
 
 
@@ -50,6 +53,23 @@ export class DashboardComponent {
     this.userString = localStorage.getItem('user');
     this.user = JSON.parse(this.userString) as OTP;
     this.usernameUser = this.user.username;
+
+    this.serverService.getServerById(this.user.userId).subscribe((data) => {
+      data.forEach(item => {
+        if (item.status == 'SERVER UP') {
+          this.serverUpLength++;
+        }
+        else {
+          this.serverDownLength++;
+        }
+        this.allServers = this.serverUpLength + this.serverDownLength;
+        this.upPercent = (this.serverUpLength / this.allServers) * 100;
+        this.downPercent = (this.serverDownLength / this.allServers) * 100;
+        this.allPercent = this.upPercent + this.downPercent;
+
+      })
+    });
+
   }
 
   constructor(
@@ -82,6 +102,7 @@ export class DashboardComponent {
       this.showAnalytics = false;
       this.showSettings = false;
       this.showHelp = false;
+
     }
   }
   showServersMethod() {
@@ -96,10 +117,22 @@ export class DashboardComponent {
       this.usernameUser = this.user.username;
       this.serverService.getServerById(this.user.userId).subscribe((data) => {
         this.servers = data;
-        console.log(this.servers);
+
       });
     }
   }
+  getServers() {
+    this.userString = localStorage.getItem('user');
+    this.user = JSON.parse(this.userString) as OTP;
+    this.usernameUser = this.user.username;
+
+    this.serverService.getServerById(this.user.userId).subscribe((data) => {
+      this.servers = data;
+
+    });
+    console.log(this.servers)
+  }
+
   showAnalyticsMethod() {
     if (this.showAnalytics == false) {
       this.showHome = false;
@@ -116,6 +149,7 @@ export class DashboardComponent {
       this.showAnalytics = false;
       this.showSettings = true;
       this.showHelp = false;
+
     }
   }
 
@@ -140,8 +174,9 @@ export class DashboardComponent {
         .pingServer(this.server?.server_id, ipaddress)
         .subscribe({
           next: (data) => {
+            this.getServers();
             server.isLoading = false;
-            console.log(data);
+
           },
           error: (err) => {
             console.log(err);
@@ -155,6 +190,11 @@ export class DashboardComponent {
     this.serverService.deleteOneServer(server.server_id).subscribe({
       next: (data) => {
         console.log(data);
+        this.getServers()
+        this.serverUpLength = 0;
+        this.serverDownLength = 0
+        this.allServers = 0;
+        this.ngOnInit()
       },
       error: (err) => {
         console.log(err);
@@ -163,15 +203,21 @@ export class DashboardComponent {
     this.servers.splice(index, 1);
     return this.servers;
   }
+
   addServer() {
     this.serverService.createServer(this.formAddServer.value).subscribe({
       next: data => {
-        console.log(data)
-
+        this.getServers();
+        this.serverUpLength = 0;
+        this.serverDownLength = 0
+        this.allServers = 0;
+        this.ngOnInit()
       }, error: err => {
         console.log(err)
       }
     })
   }
+
+
 }
 

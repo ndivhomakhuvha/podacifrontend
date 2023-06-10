@@ -16,12 +16,15 @@ header {
   img {
     height: 40px;
   }
-  div{
+
+  div {
     display: flex;
     align-items: center;
     gap: 5px;
-    ion-icon{
-      font-size: 25px;
+
+    i {
+      font-size: 30px;
+      transition: .5s ease-in;
     }
   }
 }
