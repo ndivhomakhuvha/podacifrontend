@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Toast } from 'bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GPT } from 'src/app/Types/GPT';
@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 export class DashboardComponent {
   showHome: boolean = true;
   showServers: boolean = false;
+  @ViewChild('closeButtonRef', { static: false }) closeButtonRef!: ElementRef;
   showAnalytics: boolean = false;
   showSettings: boolean = false;
   form: FormGroup;
@@ -205,8 +206,12 @@ export class DashboardComponent {
   }
 
   addServer() {
+
     this.serverService.createServer(this.formAddServer.value).subscribe({
       next: data => {
+        if (this.closeButtonRef) {
+          this.closeButtonRef.nativeElement.click();
+        }
         this.getServers();
         this.serverUpLength = 0;
         this.serverDownLength = 0
