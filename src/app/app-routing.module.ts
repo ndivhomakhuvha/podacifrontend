@@ -4,6 +4,8 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { LoginComponent } from './components/login/login.component';
 import { OTPPageComponent } from './components/otppage/otppage.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AuthGuardService } from './services/auth-guard.service';
+import { AuthService } from './services/auth.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'homepage', pathMatch: 'full' },
@@ -17,4 +19,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

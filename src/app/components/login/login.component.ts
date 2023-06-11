@@ -69,6 +69,7 @@ export class LoginComponent {
     }
   }
   submitForm() {
+    console.log(this.form.value)
     this.userService.LoginUser(this.form.value).subscribe({
       next: (data) => {
         localStorage.setItem('user', JSON.stringify(data));

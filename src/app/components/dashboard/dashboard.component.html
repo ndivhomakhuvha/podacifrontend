@@ -103,9 +103,9 @@
         <div class="adding">
           <select class="form-select" aria-label="Default select example">
             <option selected>Filter</option>
-            <option value="1">All</option>
-            <option value="2">Active</option>
-            <option value="3">Offline</option>
+            <option value="1" (click)="filterSearch(null)">All</option>
+            <option value="2" (click)="filterSearch('SERVER UP')">Active</option>
+            <option value="3" (click)="filterSearch('SERVER DOWN')">Offline</option>
           </select>
 
           <button data-bs-target="#exampleModal" data-bs-toggle="modal" data-backdrop="false"> <ion-icon
@@ -235,8 +235,12 @@
             <input type="text" placeholder="Server name" formControlName="name">
             <input type="text" placeholder="Server memory" formControlName="memory">
             <input type="text" placeholder="Server type" formControlName="type">
-
+            <div class="alert alert-danger" role="alert" *ngIf="alreadyExists">
+              Server already exists!
+            </div>
           </div>
+
+
           <div class="modal-footer">
             <button type="button" #closeButtonRef class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button type="button" class="btn" (click)="addServer()"><ion-icon name="save"></ion-icon>Save</button>

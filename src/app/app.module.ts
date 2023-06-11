@@ -33,7 +33,8 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    CanvasJSAngularChartsModule
+    CanvasJSAngularChartsModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

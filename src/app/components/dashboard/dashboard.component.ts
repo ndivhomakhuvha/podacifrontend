@@ -25,6 +25,7 @@ export class DashboardComponent {
   showHelp: boolean = false;
   server?: Server;
   userString: any;
+  selectedFilter: any;
   user?: OTP;
   messages: any[] = [];
   mymessage: any[] = [];
@@ -36,6 +37,7 @@ export class DashboardComponent {
   downPercent: number = 0;
   currentDate: Date = new Date();
   day: number = this.currentDate.getDate();
+  alreadyExists: boolean = false;
   month: string = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(
     this.currentDate
   );
@@ -103,6 +105,8 @@ export class DashboardComponent {
       this.showAnalytics = false;
       this.showSettings = false;
       this.showHelp = false;
+      this.getServers()
+
 
     }
   }
@@ -130,8 +134,9 @@ export class DashboardComponent {
     this.serverService.getServerById(this.user.userId).subscribe((data) => {
       this.servers = data;
 
+
     });
-    console.log(this.servers)
+
   }
 
   showAnalyticsMethod() {
@@ -216,11 +221,36 @@ export class DashboardComponent {
         this.serverUpLength = 0;
         this.serverDownLength = 0
         this.allServers = 0;
+        this.alreadyExists = false;
+        this.formAddServer.reset();
         this.ngOnInit()
       }, error: err => {
+        this.alreadyExists = true;
+        console.log('Exists')
         console.log(err)
       }
     })
+  }
+
+  filter: any;
+  serversCopy: Server[];
+  filterSearch(status: any) {
+    if (!this.serversCopy) {
+      this.serversCopy = [...this.servers]; // Create a copy of the original servers array
+    }
+
+    if (status) {
+      this.filter = this.serversCopy.filter((item: Server) => {
+        return item.status === status;
+      });
+    } else {
+      this.filter = this.serversCopy.slice(); // Create a copy of the serversCopy array to display all items
+    }
+
+    this.servers = this.filter;
+    console.log(this.servers);
+
+    return this.filter;
   }
 
 
