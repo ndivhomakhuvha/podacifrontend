@@ -240,6 +240,7 @@ export class DashboardComponent {
         },
         error: (err) => {
           this.alreadyExists = true;
+          this.isLoading = false;
           console.log(err);
         },
       });
