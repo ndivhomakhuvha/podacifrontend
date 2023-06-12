@@ -24,7 +24,7 @@
     </div>
     <div class="sidebar_footer">
       <p><ion-icon name="information-circle"></ion-icon>Help & Information</p>
-      <p><ion-icon name="log-out"></ion-icon>Log out</p>
+      <p (click)="logout()"><ion-icon name="log-out"></ion-icon>Log out</p>
     </div>
   </div>
   <div class="middle_dashboard">
@@ -235,11 +235,11 @@
         <form *ngIf="formAddServer" [formGroup]="formAddServer" (ngSubmit)="addServer()">
           <div class="modal-body">
             <!-- Adding image-->
-            <ngx-dropzone (change)="onSelect($event)" style="border-color: rgb(134, 134, 134); margin: 0.3rem">
+            <ngx-dropzone (change)="onSelect($event)" class="dropzone">
               <ngx-dropzone-label>Add Picture</ngx-dropzone-label>
               <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [removable]="true"
                 (removed)="onRemove(f)" [file]="f">
-                <ngx-dropzone-label>({{ f.type }})</ngx-dropzone-label>
+
               </ngx-dropzone-image-preview>
             </ngx-dropzone>
             <!-- Adding image-->
@@ -261,6 +261,12 @@
             </button>
             <button type="button" class="btn" (click)="addServer()">
               <ion-icon name="save"></ion-icon>Save
+              <div [ngClass]="{
+                'spinner-border': isLoading,
+                'not-visible': !isLoading
+              }" role="status">
+                <span class="visually-hidden"></span>
+              </div>
             </button>
           </div>
         </form>

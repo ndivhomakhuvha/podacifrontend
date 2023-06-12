@@ -25,6 +25,9 @@ export class DashboardComponent {
   form: FormGroup;
   formAddServer: FormGroup;
   showHelp: boolean = false;
+  filter: any;
+  serversCopy: Server[];
+  isLoading: boolean = false;
   server?: Server;
   userString: any;
   selectedFilter: any;
@@ -204,7 +207,7 @@ export class DashboardComponent {
 
   async addServer() {
     let url;
-
+    this.isLoading = true;
     if (!this.files[0]) {
       console.log('There is no image');
     }
@@ -218,7 +221,6 @@ export class DashboardComponent {
 
     await this.upload.uploadImage(data).subscribe(data => {
       url = data;
-      console.log(data)
       this.formAddServer.patchValue({
         imageurl: url.url,
       });
@@ -231,6 +233,7 @@ export class DashboardComponent {
           this.serverUpLength = 0;
           this.serverDownLength = 0;
           this.allServers = 0;
+          this.isLoading = false;
           this.alreadyExists = false;
           this.formAddServer.reset();
           this.ngOnInit();
@@ -243,8 +246,7 @@ export class DashboardComponent {
     })
   }
 
-  filter: any;
-  serversCopy: Server[];
+
   filterSearch(status: any) {
     if (!this.serversCopy) {
       this.serversCopy = [...this.servers]; // Create a copy of the original servers array
@@ -274,6 +276,9 @@ export class DashboardComponent {
     console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
+  logout() {
+    localStorage.clear();
+    this.router.navigate(['/login']);
+  }
 
-  //Adding Image Logic
 }
