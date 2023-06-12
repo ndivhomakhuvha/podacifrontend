@@ -204,33 +204,43 @@ export class DashboardComponent {
 
   async addServer() {
     let url;
-    this.onUpload().then((data) => {
-      url = data;
-    });
-    this.formAddServer.patchValue({
-      imageurl: 'yrs',
-    });
 
-    console.log(this.formAddServer.value);
-    // this.serverService.createServer(this.formAddServer.value).subscribe({
-    //   next: (data) => {
-    //     if (this.closeButtonRef) {
-    //       this.closeButtonRef.nativeElement.click();
-    //     }
-    //     this.getServers();
-    //     this.serverUpLength = 0;
-    //     this.serverDownLength = 0;
-    //     this.allServers = 0;
-    //     this.alreadyExists = false;
-    //     this.formAddServer.reset();
-    //     this.ngOnInit();
-    //   },
-    //   error: (err) => {
-    //     this.alreadyExists = true;
-    //     console.log('Exists');
-    //     console.log(err);
-    //   },
-    // });
+    if (!this.files[0]) {
+      console.log('There is no image');
+    }
+
+    //upload my image on cloudinary
+    const file_data = this.files[0];
+    const data = new FormData();
+    data.append('file', file_data);
+    data.append('upload_preset', 'angular_cloudinary');
+    data.append('cloud_name', 'dx7c7wkhu');
+
+    await this.upload.uploadImage(data).subscribe(data => {
+      url = data;
+      console.log(data)
+      this.formAddServer.patchValue({
+        imageurl: url.url,
+      });
+      this.serverService.createServer(this.formAddServer.value).subscribe({
+        next: (data) => {
+          if (this.closeButtonRef) {
+            this.closeButtonRef.nativeElement.click();
+          }
+          this.getServers();
+          this.serverUpLength = 0;
+          this.serverDownLength = 0;
+          this.allServers = 0;
+          this.alreadyExists = false;
+          this.formAddServer.reset();
+          this.ngOnInit();
+        },
+        error: (err) => {
+          this.alreadyExists = true;
+          console.log(err);
+        },
+      });
+    })
   }
 
   filter: any;
@@ -254,24 +264,7 @@ export class DashboardComponent {
     return this.filter;
   }
 
-  // Adding image login
-  async onUpload() {
-    if (!this.files[0]) {
-      console.log('There is no image');
-    }
 
-    //upload my image on cloudinary
-    const file_data = this.files[0];
-    const data = new FormData();
-    data.append('file', file_data);
-    data.append('upload_preset', 'angular_cloudinary');
-    data.append('cloud_name', 'dx7c7wkhu');
-
-    await this.upload.uploadImage(data).subscribe((imageLink) => {
-      this.imageUrl = imageLink.url;
-    });
-    return this.imageUrl;
-  }
 
   onSelect(event: { addedFiles: any }) {
     this.files.push(...event.addedFiles);
