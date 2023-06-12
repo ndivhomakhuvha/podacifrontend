@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartComponent } from './components/chart/chart.component'
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
     FormsModule,
     HttpClientModule,
     CanvasJSAngularChartsModule,
+    NgxDropzoneModule
     
   ],
   providers: [],

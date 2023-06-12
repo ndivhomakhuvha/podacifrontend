@@ -8,6 +8,8 @@ import { ChatService } from 'src/app/services/chat.service';
 import { ServerService } from 'src/app/services/server.service';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
+import { UploadService } from 'src/app/services/upload.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -34,6 +36,7 @@ export class DashboardComponent {
   username: string = 'GPT-Engineer';
   email: string = '@gptengineer';
   upPercent: number = 0;
+  imageUrl: any;
   downPercent: number = 0;
   currentDate: Date = new Date();
   day: number = this.currentDate.getDate();
@@ -50,7 +53,7 @@ export class DashboardComponent {
   allServers: number = 0;
   allPercent: number = 0;
   loading: boolean = false;
-
+  files: any[] = [];
 
   ngOnInit() {
     this.userString = localStorage.getItem('user');
@@ -58,21 +61,18 @@ export class DashboardComponent {
     this.usernameUser = this.user.username;
 
     this.serverService.getServerById(this.user.userId).subscribe((data) => {
-      data.forEach(item => {
+      data.forEach((item) => {
         if (item.status == 'SERVER UP') {
           this.serverUpLength++;
-        }
-        else {
+        } else {
           this.serverDownLength++;
         }
         this.allServers = this.serverUpLength + this.serverDownLength;
         this.upPercent = (this.serverUpLength / this.allServers) * 100;
         this.downPercent = (this.serverDownLength / this.allServers) * 100;
         this.allPercent = this.upPercent + this.downPercent;
-
-      })
+      });
     });
-
   }
 
   constructor(
@@ -80,7 +80,8 @@ export class DashboardComponent {
     private fb: FormBuilder,
     private gpt: ChatService,
     private serverService: ServerService,
-    private router: Router
+    private router: Router,
+    private upload: UploadService
   ) {
     this.form = this.fb.group({
       message: [''],
@@ -88,15 +89,14 @@ export class DashboardComponent {
     this.userString = localStorage.getItem('user');
     this.user = JSON.parse(this.userString) as OTP;
 
-
     this.formAddServer = this.fb.group({
       imageurl: [''],
       ipadress: [''],
       name: [''],
       memory: [''],
       type: [''],
-      user_id: [this.user?.userId]
-    })
+      user_id: [this.user?.userId],
+    });
   }
   showHomeMethod() {
     if (this.showHome == false) {
@@ -105,9 +105,7 @@ export class DashboardComponent {
       this.showAnalytics = false;
       this.showSettings = false;
       this.showHelp = false;
-      this.getServers()
-
-
+      this.getServers();
     }
   }
   showServersMethod() {
@@ -122,7 +120,6 @@ export class DashboardComponent {
       this.usernameUser = this.user.username;
       this.serverService.getServerById(this.user.userId).subscribe((data) => {
         this.servers = data;
-
       });
     }
   }
@@ -133,10 +130,7 @@ export class DashboardComponent {
 
     this.serverService.getServerById(this.user.userId).subscribe((data) => {
       this.servers = data;
-
-
     });
-
   }
 
   showAnalyticsMethod() {
@@ -155,7 +149,6 @@ export class DashboardComponent {
       this.showAnalytics = false;
       this.showSettings = true;
       this.showHelp = false;
-
     }
   }
 
@@ -182,7 +175,6 @@ export class DashboardComponent {
           next: (data) => {
             this.getServers();
             server.isLoading = false;
-
           },
           error: (err) => {
             console.log(err);
@@ -196,11 +188,11 @@ export class DashboardComponent {
     this.serverService.deleteOneServer(server.server_id).subscribe({
       next: (data) => {
         console.log(data);
-        this.getServers()
+        this.getServers();
         this.serverUpLength = 0;
-        this.serverDownLength = 0
+        this.serverDownLength = 0;
         this.allServers = 0;
-        this.ngOnInit()
+        this.ngOnInit();
       },
       error: (err) => {
         console.log(err);
@@ -210,26 +202,35 @@ export class DashboardComponent {
     return this.servers;
   }
 
-  addServer() {
+  async addServer() {
+    let url;
+    this.onUpload().then((data) => {
+      url = data;
+    });
+    this.formAddServer.patchValue({
+      imageurl: 'yrs',
+    });
 
-    this.serverService.createServer(this.formAddServer.value).subscribe({
-      next: data => {
-        if (this.closeButtonRef) {
-          this.closeButtonRef.nativeElement.click();
-        }
-        this.getServers();
-        this.serverUpLength = 0;
-        this.serverDownLength = 0
-        this.allServers = 0;
-        this.alreadyExists = false;
-        this.formAddServer.reset();
-        this.ngOnInit()
-      }, error: err => {
-        this.alreadyExists = true;
-        console.log('Exists')
-        console.log(err)
-      }
-    })
+    console.log(this.formAddServer.value);
+    // this.serverService.createServer(this.formAddServer.value).subscribe({
+    //   next: (data) => {
+    //     if (this.closeButtonRef) {
+    //       this.closeButtonRef.nativeElement.click();
+    //     }
+    //     this.getServers();
+    //     this.serverUpLength = 0;
+    //     this.serverDownLength = 0;
+    //     this.allServers = 0;
+    //     this.alreadyExists = false;
+    //     this.formAddServer.reset();
+    //     this.ngOnInit();
+    //   },
+    //   error: (err) => {
+    //     this.alreadyExists = true;
+    //     console.log('Exists');
+    //     console.log(err);
+    //   },
+    // });
   }
 
   filter: any;
@@ -253,6 +254,33 @@ export class DashboardComponent {
     return this.filter;
   }
 
+  // Adding image login
+  async onUpload() {
+    if (!this.files[0]) {
+      console.log('There is no image');
+    }
 
+    //upload my image on cloudinary
+    const file_data = this.files[0];
+    const data = new FormData();
+    data.append('file', file_data);
+    data.append('upload_preset', 'angular_cloudinary');
+    data.append('cloud_name', 'dx7c7wkhu');
+
+    await this.upload.uploadImage(data).subscribe((imageLink) => {
+      this.imageUrl = imageLink.url;
+    });
+    return this.imageUrl;
+  }
+
+  onSelect(event: { addedFiles: any }) {
+    this.files.push(...event.addedFiles);
+  }
+
+  onRemove(event: any) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
+  }
+
+  //Adding Image Logic
 }
-
