@@ -305,11 +305,8 @@
 
             ion-icon {
               font-size: 25px;
-
             }
           }
-
-
 
           ion-icon {
             font-size: 30px;
@@ -327,7 +324,6 @@
       table {
         width: 100%;
         border-collapse: collapse;
-
       }
 
       th,
@@ -348,12 +344,11 @@
 
         .ping {
           max-height: 25px;
-          transition: .5s ease-in-out;
+          transition: 0.5s ease-in-out;
         }
 
         .ping:hover {
           transform: scale(1.05);
-
         }
 
         .delete_container {
@@ -399,9 +394,8 @@
                 box-shadow: 0 0 0 0 rgba(0, 128, 0, 0.116);
               }
 
-
               50% {
-                transform: scale(0.60);
+                transform: scale(0.6);
                 box-shadow: 0 0 0 10px rgba(0, 128, 0, 0.205);
               }
 
@@ -460,7 +454,67 @@
     }
 
     .settings {
-      margin: 30px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .profile_card {
+        height: 200px;
+        width: 350px;
+        margin-top: 100px;
+        border-radius: 5px;
+        background-color: #313131;
+        display: flex;
+        flex-direction: column;
+
+
+        border: none;
+        .top_bar {
+          width: 100%;
+          height: 120px;
+          border-radius: 5px 5px 0px 0px;
+          background-color: #242424;
+          border-bottom: 1px solid rgba(128, 128, 128, 0.497);
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+          .profile_picture{
+        
+          outline: 2px solid #313131;
+          outline-offset: 5px;
+          border-radius: 50%;
+            img{
+              height: 30px;
+              width: 30px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+         
+          }
+          .person_details {
+            h5 {
+              color: white;
+              margin: 0 !important;
+            }
+            h6 {
+              color: #6b6767;
+              margin: 0 !important;
+            }
+          }
+          .badge{
+            height: 20px;
+            width: 60px;
+            border-radius: 20px;
+            background-color: greenyellow;
+            outline: 1px solid white;
+            outline-offset: 2px;
+            color:black
+          
+          }
+      
+        }
+     
+      }
     }
   }
 
@@ -704,9 +758,6 @@
 
 .modal-content {
   width: 80%;
-
-
-
 }
 
 .modal-footer {
@@ -722,21 +773,18 @@
     align-items: center;
     justify-content: center;
 
-
     ion-icon {
       font-size: 19px;
     }
   }
 }
 
-@media(width < 1500px) {
+@media (width < 1500px) {
   .dashboard_container {
     .right_dashboard {
       .chat {
         height: 300px;
       }
     }
-
   }
-
 }

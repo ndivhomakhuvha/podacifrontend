@@ -10,6 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { UploadService } from 'src/app/services/upload.service';
 import { Observable } from 'rxjs';
+import 'table2excel';
 
 @Component({
   selector: 'app-dashboard',
@@ -219,7 +220,7 @@ export class DashboardComponent {
     data.append('upload_preset', 'angular_cloudinary');
     data.append('cloud_name', 'dx7c7wkhu');
 
-    await this.upload.uploadImage(data).subscribe(data => {
+    await this.upload.uploadImage(data).subscribe((data) => {
       url = data;
       this.formAddServer.patchValue({
         imageurl: url.url,
@@ -244,9 +245,8 @@ export class DashboardComponent {
           console.log(err);
         },
       });
-    })
+    });
   }
-
 
   filterSearch(status: any) {
     if (!this.serversCopy) {
@@ -267,8 +267,6 @@ export class DashboardComponent {
     return this.filter;
   }
 
-
-
   onSelect(event: { addedFiles: any }) {
     this.files.push(...event.addedFiles);
   }
@@ -281,5 +279,18 @@ export class DashboardComponent {
     localStorage.clear();
     this.router.navigate(['/login']);
   }
+  download() {
+    const Table2Excel = (window as any).Table2Excel;
 
+    const table2excel = new Table2Excel({
+      exclude: '.noExl',
+      name: 'Excel Document Name',
+      defaultFileName: 'Network Perfomance',
+      exclude_img: true,
+      exclude_links: true,
+      exclude_inputs: true,
+    });
+
+    table2excel.export(document.querySelector('#testTable'));
+  }
 }
