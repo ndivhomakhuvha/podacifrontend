@@ -24,14 +24,3 @@ export class HeaderComponent {
   }
 }
 
-// const password = document.getElementById('password');
-// const ion = document.getElementById('ion');
-// if (this.passwordHidden == false) {
-//   this.passwordHidden = true;
-//   password?.setAttribute('type', 'text');
-//   ion?.setAttribute('name', 'eye-outline');
-// } else {
-//   this.passwordHidden = false;
-//   password?.setAttribute('type', 'password');
-//   ion?.setAttribute('name', 'eye-off-outline');
-// }
