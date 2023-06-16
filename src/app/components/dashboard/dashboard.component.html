@@ -2,38 +2,23 @@
   <div class="left_dashboard">
     <div class="sidebar_logo">
       <h1>
-        <img
-          src="https://img.icons8.com/?size=512&id=100051&format=png"
-          alt=""
-        />
+        <img src="https://img.icons8.com/?size=512&id=100051&format=png" alt="" />
         Podaci
       </h1>
     </div>
 
     <div class="sidebar_menu">
-      <p
-        (click)="showHomeMethod()"
-        [ngClass]="showHome ? 'clicked' : 'not_clicked'"
-      >
+      <p (click)="showHomeMethod()" [ngClass]="showHome ? 'clicked' : 'not_clicked'">
         <ion-icon name="home"></ion-icon>Home
       </p>
-      <p
-        (click)="showServersMethod()"
-        [ngClass]="showServers ? 'clicked' : 'not_clicked'"
-      >
+      <p (click)="showServersMethod()" [ngClass]="showServers ? 'clicked' : 'not_clicked'">
         <ion-icon name="server"></ion-icon>Servers
       </p>
 
-      <p
-        (click)="showAnalyticsMethod()"
-        [ngClass]="showAnalytics ? 'clicked' : 'not_clicked'"
-      >
+      <p (click)="showAnalyticsMethod()" [ngClass]="showAnalytics ? 'clicked' : 'not_clicked'">
         <ion-icon name="analytics"></ion-icon>Analytics
       </p>
-      <p
-        (click)="showSettingsMethod()"
-        [ngClass]="showSettings ? 'clicked' : 'not_clicked'"
-      >
+      <p (click)="showSettingsMethod()" [ngClass]="showSettings ? 'clicked' : 'not_clicked'">
         <ion-icon name="settings"></ion-icon>Settings
       </p>
     </div>
@@ -101,8 +86,7 @@
             <div class="under_top_numbering">
               <h1>{{ allServers }}</h1>
               <p class="all">
-                <ion-icon name="cloud-circle" class="all_icon"></ion-icon
-                >{{ allPercent.toFixed() }}%
+                <ion-icon name="cloud-circle" class="all_icon"></ion-icon>{{ allPercent.toFixed() }}%
               </p>
             </div>
           </div>
@@ -134,11 +118,7 @@
             </option>
           </select>
 
-          <button
-            data-bs-target="#exampleModal"
-            data-bs-toggle="modal"
-            data-backdrop="false"
-          >
+          <button data-bs-target="#exampleModal" data-bs-toggle="modal" data-backdrop="false">
             <ion-icon name="add-circle"></ion-icon>Add Server
           </button>
 
@@ -174,21 +154,14 @@
           </td>
 
           <td>
-            <div
-              [ngClass]="{
+            <div [ngClass]="{
                 'spinner-border': row.isLoading,
                 'not-visible': !row.isLoading
-              }"
-              role="status"
-            >
+              }" role="status">
               <span class="visually-hidden"></span>
             </div>
-            <img
-              class="ping"
-              [class.not-visible]="row.isLoading"
-              (click)="pingServer(row)"
-              src="https://img.icons8.com/?size=512&id=9928&format=png"
-            />
+            <img class="ping" [class.not-visible]="row.isLoading" (click)="pingServer(row)"
+              src="https://img.icons8.com/?size=512&id=9928&format=png" />
           </td>
           <td>
             <div class="delete_container" (click)="deleteOneServer(row, index)">
@@ -205,7 +178,9 @@
       <div class="profile_card">
         <div class="top_bar">
           <div class="profile_picture">
-            <img src="https://images.unsplash.com/photo-1541647249291-71c1d98ce84f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8eW91bmclMjBwcm9mZmVzaW9uYWwlMjBsYWR5fGVufDB8fDB8fHww&auto=format&fit=crop&w=900&q=60" alt="">
+            <img
+              src="https://images.unsplash.com/photo-1541647249291-71c1d98ce84f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8eW91bmclMjBwcm9mZmVzaW9uYWwlMjBsYWR5fGVufDB8fDB8fHww&auto=format&fit=crop&w=900&q=60"
+              alt="">
           </div>
           <div class="person_details">
             <h5>{{user?.username}}</h5>
@@ -215,7 +190,11 @@
             Admin
           </div>
         </div>
-        <button>Update Details</button>
+        <div class="buttons_container">
+          <button>Update Details</button>
+          <button class="delete">Delete Account</button>
+        </div>
+
       </div>
     </div>
   </div>
@@ -256,11 +235,7 @@
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="chatWithGpt()">
       <div class="inputBox">
         <ion-icon name="attach"></ion-icon>
-        <input
-          type="text"
-          placeholder="Enter Query"
-          formControlName="message"
-        />
+        <input type="text" placeholder="Enter Query" formControlName="message" />
 
         <ion-icon name="send" type="submit"></ion-icon>
         <ion-icon name="mic"></ion-icon>
@@ -268,92 +243,47 @@
     </form>
   </div>
 
-  <div
-    class="modal fade"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <img
             src="https://res.cloudinary.com/dxnpgxqlg/image/upload/v1686408181/original-b47fd46878972efc7d4283cef54dc984-removebg-preview_yzagsb.png"
-            alt=""
-          />
+            alt="" />
           <h1 class="modal-title fs-5" id="exampleModalLabel">Add Server</h1>
         </div>
-        <form
-          *ngIf="formAddServer"
-          [formGroup]="formAddServer"
-          (ngSubmit)="addServer()"
-        >
+        <form *ngIf="formAddServer" [formGroup]="formAddServer" (ngSubmit)="addServer()">
           <div class="modal-body">
             <!-- Adding image-->
             <ngx-dropzone (change)="onSelect($event)" class="dropzone">
               <ngx-dropzone-label>Add Picture</ngx-dropzone-label>
-              <ngx-dropzone-image-preview
-                ngProjectAs="ngx-dropzone-preview"
-                *ngFor="let f of files"
-                [removable]="true"
-                (removed)="onRemove(f)"
-                [file]="f"
-              >
+              <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [removable]="true"
+                (removed)="onRemove(f)" [file]="f">
               </ngx-dropzone-image-preview>
             </ngx-dropzone>
             <!-- Adding image-->
             <!-- <button (click)="onUpload()">Upload</button> -->
 
-            <input
-              type="hidden"
-              placeholder="Image Address"
-              formControlName="imageurl"
-              [value]="imageUrl"
-            />
-            <input
-              type="text"
-              placeholder="IP Address"
-              formControlName="ipadress"
-            />
-            <input
-              type="text"
-              placeholder="Server name"
-              formControlName="name"
-            />
-            <input
-              type="text"
-              placeholder="Server memory"
-              formControlName="memory"
-            />
-            <input
-              type="text"
-              placeholder="Server type"
-              formControlName="type"
-            />
+            <input type="hidden" placeholder="Image Address" formControlName="imageurl" [value]="imageUrl" />
+            <input type="text" placeholder="IP Address" formControlName="ipadress" />
+            <input type="text" placeholder="Server name" formControlName="name" />
+            <input type="text" placeholder="Server memory" formControlName="memory" />
+            <input type="text" placeholder="Server type" formControlName="type" />
             <div class="alert alert-danger" role="alert" *ngIf="alreadyExists">
               Server already exists!
             </div>
           </div>
 
           <div class="modal-footer">
-            <button
-              type="button"
-              #closeButtonRef
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
+            <button type="button" #closeButtonRef class="btn btn-secondary" data-bs-dismiss="modal">
               Close
             </button>
             <button type="button" class="btn" (click)="addServer()">
               <ion-icon name="save"></ion-icon>Save
-              <div
-                [ngClass]="{
+              <div [ngClass]="{
                   'spinner-border': isLoading,
                   'not-visible': !isLoading
-                }"
-                role="status"
-              >
+                }" role="status">
                 <span class="visually-hidden"></span>
               </div>
             </button>

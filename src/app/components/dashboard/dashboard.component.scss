@@ -92,6 +92,7 @@
           margin-top: 10px;
           flex: 1;
           border: 1px solid rgba(160, 160, 160, 0.35);
+          background-color: #242424;
           border-radius: 5px;
         }
       }
@@ -458,6 +459,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+
       .profile_card {
         height: 200px;
         width: 350px;
@@ -466,9 +468,45 @@
         background-color: #313131;
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
 
 
         border: none;
+
+        .buttons_container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 5px;
+
+          .delete {
+            height: 40px;
+            margin-top: 40px;
+            margin-bottom: 10px;
+            width: 145px;
+            border-radius: 5px;
+            background-color: rgba(255, 0, 0, 0.247);
+            color: red;
+            font-weight: 500;
+            font-size: 13px;
+          }
+
+          button {
+            height: 40px;
+            margin-top: 40px;
+            margin-bottom: 10px;
+            width: 145px;
+            border-radius: 5px;
+            background-color: rgb(61, 21, 170);
+            color: white;
+            font-weight: 500;
+            font-size: 13px;
+          }
+
+        }
+
+
         .top_bar {
           width: 100%;
           height: 120px;
@@ -478,42 +516,46 @@
           display: flex;
           align-items: center;
           justify-content: space-evenly;
-          .profile_picture{
-        
-          outline: 2px solid #313131;
-          outline-offset: 5px;
-          border-radius: 50%;
-            img{
+
+          .profile_picture {
+
+            outline: 2px solid #313131;
+            outline-offset: 5px;
+            border-radius: 50%;
+
+            img {
               height: 30px;
               width: 30px;
               border-radius: 50%;
               object-fit: cover;
             }
-         
+
           }
+
           .person_details {
             h5 {
               color: white;
               margin: 0 !important;
             }
+
             h6 {
               color: #6b6767;
               margin: 0 !important;
             }
           }
-          .badge{
+
+          .badge {
             height: 20px;
             width: 60px;
             border-radius: 20px;
             background-color: greenyellow;
             outline: 1px solid white;
             outline-offset: 2px;
-            color:black
-          
+            color: black
           }
-      
+
         }
-     
+
       }
     }
   }

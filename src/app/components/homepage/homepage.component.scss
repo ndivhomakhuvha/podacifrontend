@@ -1,12 +1,13 @@
-.Get_started{
- 
+.Get_started {
+
     height: 100vh;
     width: 100vw;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #343541;
-    .buttons{
+
+    .buttons {
         height: 400px;
         width: 400px;
         background-color: white;
@@ -15,20 +16,44 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        .buttons_container{
+        gap: 10px;
+
+        .welcome_text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+
+            h4,
+            p {
+                margin: 0 !important;
+            }
+        }
+
+        .buttons_container {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 5px;
-            button{
+
+            button {
                 height: 30px;
-                width: 70px;
+                width: 75px;
                 border-radius: 5px;
                 background-color: #10a37f;
                 color: white;
+                font-size: 15px;
+                font-weight: 500;
+
+            }
+
+            button:hover {
+                background-color: #086e55;
             }
         }
-        img{
+
+        img {
             height: 100px;
         }
     }
