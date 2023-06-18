@@ -191,9 +191,17 @@
           </div>
         </div>
         <div class="buttons_container">
-          <button>Update Details</button>
+          <button (click)="updateDetails()">Update Details</button>
           <button class="delete">Delete Account</button>
         </div>
+
+      </div>
+
+      <div class="profile_card_details" *ngIf="update" [formGroup]="formUpdate">
+        <input type="text" placeholder="Username" formControlName="username">
+        <input type="text" placeholder="Email" formControlName="email">
+        <input type="text" placeholder="Password" formControlName="password">
+        <input type="submit" value="Update" (click)="updateActualDetails()">
 
       </div>
     </div>

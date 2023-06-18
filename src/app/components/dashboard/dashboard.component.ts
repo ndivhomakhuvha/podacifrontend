@@ -26,6 +26,8 @@ export class DashboardComponent {
   form: FormGroup;
   formAddServer: FormGroup;
   showHelp: boolean = false;
+  update: boolean = false;
+  formUpdate: FormGroup;
   filter: any;
   serversCopy: Server[];
   isLoading: boolean = false;
@@ -101,6 +103,11 @@ export class DashboardComponent {
       type: [''],
       user_id: [this.user?.userId],
     });
+    this.formUpdate = this.fb.group({
+      username: [''],
+      email: [''],
+      password: ['']
+    })
   }
   showHomeMethod() {
     if (this.showHome == false) {
@@ -292,5 +299,18 @@ export class DashboardComponent {
     });
 
     table2excel.export(document.querySelector('#testTable'));
+  }
+
+  updateDetails() {
+    if (this.update == false) {
+      this.update = true;
+    } else {
+      this.update = false;
+    }
+
+  }
+  updateActualDetails() {
+    console.log(this.formUpdate.value)
+    this.update = false;
   }
 }

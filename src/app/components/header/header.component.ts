@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -8,6 +9,7 @@ import { Component, Input } from '@angular/core';
 })
 export class HeaderComponent {
   darkOrLight: boolean = false;
+  constructor(private router: Router) { }
 
   onOrOff() {
     let icon = document.querySelector('i');
@@ -21,6 +23,10 @@ export class HeaderComponent {
       icon?.setAttribute('class', 'bi bi-toggle-off')
     }
 
+  }
+
+  findRoute(route: string) {
+    return this.router.url.includes(route);
   }
 }
 
