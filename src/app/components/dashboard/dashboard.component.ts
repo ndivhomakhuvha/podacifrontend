@@ -106,8 +106,8 @@ export class DashboardComponent {
     this.formUpdate = this.fb.group({
       username: [''],
       email: [''],
-      password: ['']
-    })
+      password: [''],
+    });
   }
   showHomeMethod() {
     if (this.showHome == false) {
@@ -284,7 +284,7 @@ export class DashboardComponent {
   }
   logout() {
     localStorage.clear();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
   download() {
     const Table2Excel = (window as any).Table2Excel;
@@ -307,10 +307,9 @@ export class DashboardComponent {
     } else {
       this.update = false;
     }
-
   }
   updateActualDetails() {
-    console.log(this.formUpdate.value)
+    console.log(this.formUpdate.value);
     this.update = false;
   }
 }

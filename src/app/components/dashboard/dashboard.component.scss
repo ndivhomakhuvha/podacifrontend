@@ -88,14 +88,40 @@
         gap: 10px;
 
         .something {
+          display: flex;
+          align-items: center;
+          justify-content: center;
           height: 100px;
           margin-top: 10px;
           flex: 1;
           border: 1px solid rgba(160, 160, 160, 0.35);
-          background-color: #242424;
+          background-color: rgb(41, 37, 36);
           border-radius: 5px;
+          gap: 10px;
+          .icon_container {
+            height: 60px;
+            width: 60px;
+            background-color: rgb(190, 245, 94);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            ion-icon {
+              font-size: 25px;
+            }
+          }
+          .word_container {
+            height: 60px;
+            width: 120px;
+            h4{
+              font-size: 13px;
+              font-weight: 600;
+              color: white;
+            }
+          }
         }
       }
+      // #fff37a
 
       .home_chart {
         width: 100% !important;
@@ -473,14 +499,13 @@
         justify-content: center;
         border: none;
         gap: 5px;
-        transition: .7s ease-in-out;
+        transition: 0.7s ease-in-out;
 
         input[type="submit"] {
           width: 30%;
           background-color: green;
           margin-top: 20px;
         }
-
 
         input {
           height: 40px;
@@ -491,7 +516,6 @@
           border: none;
           outline: none;
           border-radius: 5px;
-
         }
       }
 
@@ -505,7 +529,6 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-
 
         border: none;
 
@@ -538,9 +561,7 @@
             font-weight: 500;
             font-size: 13px;
           }
-
         }
-
 
         .top_bar {
           width: 100%;
@@ -553,7 +574,6 @@
           justify-content: space-evenly;
 
           .profile_picture {
-
             outline: 2px solid #313131;
             outline-offset: 5px;
             border-radius: 50%;
@@ -564,7 +584,6 @@
               border-radius: 50%;
               object-fit: cover;
             }
-
           }
 
           .person_details {
@@ -586,11 +605,9 @@
             background-color: greenyellow;
             outline: 1px solid white;
             outline-offset: 2px;
-            color: black
+            color: black;
           }
-
         }
-
       }
     }
   }
