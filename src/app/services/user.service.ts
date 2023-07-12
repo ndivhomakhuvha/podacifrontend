@@ -18,4 +18,7 @@ export class UserService {
   resendOTP(email: any): Observable<OTP> {
     return this.http.post<OTP>(developmentURI.resendOTPURI, email);
   }
+  updateUser(updatedDet : UserRegister, userid: number){
+    return this.http.put(`${developmentURI.registerUserURI}/update/${userid}`, updatedDet);
+  }
 }

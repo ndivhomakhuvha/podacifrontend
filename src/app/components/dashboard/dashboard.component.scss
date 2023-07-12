@@ -113,7 +113,7 @@
           .word_container {
             height: 60px;
             width: 120px;
-            h4{
+            h4 {
               font-size: 13px;
               font-weight: 600;
               color: white;
@@ -517,6 +517,30 @@
           outline: none;
           border-radius: 5px;
         }
+        .input_container_update {
+          width: 95%;
+          height: 50px;
+          background-color: #242424;
+          padding: 10px;
+          display: flex;
+          align-items: center;
+          border-radius: 5px;
+          .pass {
+            width: 90%;
+            height: 25px;
+            background-color: none;
+            background-color: none;
+            padding: 0;
+          }
+          ion-icon {
+            color: white;
+            font-size: 20px;
+          }
+        }
+      }
+      .alert{
+        width: 350px;
+        text-align: center;
       }
 
       .profile_card {
@@ -703,6 +727,12 @@
           font-size: 12px;
           color: rgba(128, 128, 128, 0.589);
           margin: 0 !important;
+          .time_zone {
+            font-weight: 600;
+            color: black;
+            position: relative;
+            left: 10px;
+          }
         }
       }
     }

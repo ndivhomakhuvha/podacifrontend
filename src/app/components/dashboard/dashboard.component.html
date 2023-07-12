@@ -246,8 +246,26 @@
       <div class="profile_card_details" *ngIf="update" [formGroup]="formUpdate">
         <input type="text" placeholder="Username" formControlName="username" />
         <input type="text" placeholder="Email" formControlName="email" />
-        <input type="text" placeholder="Password" formControlName="password" />
+        <div class="input_container_update">
+          <input
+            type="password"
+            class="pass"
+            id="password"
+            placeholder="Password"
+            formControlName="password"
+          />
+          <ion-icon
+            name="eye-off-outline"
+            (click)="showOrHide()"
+            id="ion"
+          ></ion-icon>
+        </div>
+
         <input type="submit" value="Update" (click)="updateActualDetails()" />
+      </div>
+
+      <div class="alert alert-success" role="alert" *ngIf="updatedUserDetails" >
+        <strong>User has been updated!</strong>
       </div>
     </div>
   </div>
@@ -276,7 +294,9 @@
     <div class="chat">
       <div class="zoho" *ngFor="let message of mymessage; let i = index">
         <div class="myMessage">
-          <p class="user">{{ usernameUser }}</p>
+          <p class="user">
+            {{ usernameUser }} <span class="time_zone">{{ currentTime }}</span>
+          </p>
           {{ message.message }}
         </div>
         <div class="chatBox">

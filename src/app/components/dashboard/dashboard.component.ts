@@ -3,7 +3,7 @@ import { Toast } from 'bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GPT } from 'src/app/Types/GPT';
 import { Server } from 'src/app/Types/Servers';
-import { OTP } from 'src/app/Types/User';
+import { OTP, updateDto } from 'src/app/Types/User';
 import { ChatService } from 'src/app/services/chat.service';
 import { ServerService } from 'src/app/services/server.service';
 import { UserService } from 'src/app/services/user.service';
@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { UploadService } from 'src/app/services/upload.service';
 import { Observable } from 'rxjs';
 import 'table2excel';
+import { getLocaleDateTimeFormat } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -34,7 +35,9 @@ export class DashboardComponent {
   server?: Server;
   userString: any;
   selectedFilter: any;
-  user?: OTP;
+  currentTime: string = `${new Date().getHours()}:${new Date().getMinutes()} `;
+  updatedUser?: updateDto;
+  user: OTP;
   messages: any[] = [];
   mymessage: any[] = [];
   usernameUser: string = '';
@@ -42,6 +45,7 @@ export class DashboardComponent {
   username: string = 'GPT-Engineer';
   email: string = '@gptengineer';
   upPercent: number = 0;
+  updatedUserDetails: boolean = false;
   imageUrl: any;
   downPercent: number = 0;
   currentDate: Date = new Date();
@@ -60,6 +64,7 @@ export class DashboardComponent {
   allPercent: number = 0;
   loading: boolean = false;
   files: any[] = [];
+  passwordHidden: boolean = false;
 
   ngOnInit() {
     this.userString = localStorage.getItem('user');
@@ -104,9 +109,9 @@ export class DashboardComponent {
       user_id: [this.user?.userId],
     });
     this.formUpdate = this.fb.group({
-      username: [''],
-      email: [''],
-      password: [''],
+      username: [this.user.username],
+      email: [this.user.email],
+      password: ['12345678'],
     });
   }
   showHomeMethod() {
@@ -309,7 +314,36 @@ export class DashboardComponent {
     }
   }
   updateActualDetails() {
+    this.userString = localStorage.getItem('user');
+    this.user = JSON.parse(this.userString) as OTP;
+    this.userService
+      .updateUser(this.formUpdate.value, this.user?.userId)
+      .subscribe({
+        next: (data) => {
+          this.updatedUser = data as updateDto;
+          this.user.email = this.updatedUser.email;
+          this.user.username = this.updatedUser.username;
+          this.updatedUserDetails = true;
+        },
+        error: (err) => {
+          this.user = this.user;
+        },
+      });
     console.log(this.formUpdate.value);
     this.update = false;
+  }
+
+  showOrHide() {
+    const password = document.getElementById('password');
+    const ion = document.getElementById('ion');
+    if (this.passwordHidden == false) {
+      this.passwordHidden = true;
+      password?.setAttribute('type', 'text');
+      ion?.setAttribute('name', 'eye-outline');
+    } else {
+      this.passwordHidden = false;
+      password?.setAttribute('type', 'password');
+      ion?.setAttribute('name', 'eye-off-outline');
+    }
   }
 }
