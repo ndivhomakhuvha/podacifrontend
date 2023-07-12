@@ -15,7 +15,7 @@ export interface OTP {
   token: string;
 }
 export interface updateDto {
-  username: string,
-  email: string,
-  userId: number
+  username: string;
+  email: string;
+  userId: number;
 }

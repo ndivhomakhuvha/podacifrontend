@@ -324,9 +324,11 @@ export class DashboardComponent {
           this.user.email = this.updatedUser.email;
           this.user.username = this.updatedUser.username;
           this.updatedUserDetails = true;
+          localStorage.setItem('user', JSON.stringify(this.user));
         },
         error: (err) => {
           this.user = this.user;
+          this.updatedUserDetails = false;
         },
       });
     console.log(this.formUpdate.value);
