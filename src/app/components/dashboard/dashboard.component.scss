@@ -876,6 +876,32 @@
     font-weight: 500;
     font-size: 13px;
   }
+  .ip_address_type {
+    height: 20px;
+    width: 95%;
+    margin: 4px !important;
+    .form-switch {
+      height: 20px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 !important;
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      justify-content: space-between;
+      gap: 100px;
+
+      .form-check-input {
+        height: 20px;
+        width: 40px;
+        border-radius: 50px;
+      }
+      .form-check-label {
+        font-size: 13px;
+        color: rgba(128, 128, 128, 0.771);
+      }
+    }
+  }
 
   .alert {
     width: 95%;

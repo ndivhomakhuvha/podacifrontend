@@ -51,6 +51,7 @@ export class DashboardComponent {
   currentDate: Date = new Date();
   day: number = this.currentDate.getDate();
   alreadyExists: boolean = false;
+
   month: string = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(
     this.currentDate
   );
@@ -107,6 +108,7 @@ export class DashboardComponent {
       memory: [''],
       type: [''],
       user_id: [this.user?.userId],
+      isToggleChecked: [false],
     });
     this.formUpdate = this.fb.group({
       username: [this.user.username],
@@ -219,10 +221,13 @@ export class DashboardComponent {
   }
 
   async addServer() {
+    let httpsOn = this.formAddServer.get('isToggleChecked')?.value;
+
     let url;
     this.isLoading = true;
     if (!this.files[0]) {
       console.log('There is no image');
+      this.isLoading = false;
     }
 
     //upload my image on cloudinary
@@ -237,26 +242,53 @@ export class DashboardComponent {
       this.formAddServer.patchValue({
         imageurl: url.url,
       });
-      this.serverService.createServer(this.formAddServer.value).subscribe({
-        next: (data) => {
-          if (this.closeButtonRef) {
-            this.closeButtonRef.nativeElement.click();
-          }
-          this.getServers();
-          this.serverUpLength = 0;
-          this.serverDownLength = 0;
-          this.allServers = 0;
-          this.isLoading = false;
-          this.alreadyExists = false;
-          this.formAddServer.reset();
-          this.ngOnInit();
-        },
-        error: (err) => {
-          this.alreadyExists = true;
-          this.isLoading = false;
-          console.log(err);
-        },
-      });
+      if (httpsOn) {
+        this.formAddServer.removeControl('isToggleChecked');
+
+        this.serverService
+          .createHttpsServer(this.formAddServer.value)
+          .subscribe({
+            next: (data) => {
+              if (this.closeButtonRef) {
+                this.closeButtonRef.nativeElement.click();
+              }
+              this.getServers();
+              this.serverUpLength = 0;
+              this.serverDownLength = 0;
+              this.allServers = 0;
+              this.isLoading = false;
+              this.alreadyExists = false;
+              this.formAddServer.reset();
+              this.ngOnInit();
+            },
+            error: (err) => {
+              this.alreadyExists = true;
+              this.isLoading = false;
+              console.log(err);
+            },
+          });
+      } else {
+        this.serverService.createServer(this.formAddServer.value).subscribe({
+          next: (data) => {
+            if (this.closeButtonRef) {
+              this.closeButtonRef.nativeElement.click();
+            }
+            this.getServers();
+            this.serverUpLength = 0;
+            this.serverDownLength = 0;
+            this.allServers = 0;
+            this.isLoading = false;
+            this.alreadyExists = false;
+            this.formAddServer.reset();
+            this.ngOnInit();
+          },
+          error: (err) => {
+            this.alreadyExists = true;
+            this.isLoading = false;
+            console.log(err);
+          },
+        });
+      }
     });
   }
 

@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { developmentURI, environment } from 'src/environments/environment.development';
+import {
+  developmentURI,
+  environment,
+} from 'src/environments/environment.development';
 import { OTP, UserLogin, UserRegister } from '../Types/User';
 import { Observable } from 'rxjs';
 
@@ -8,7 +11,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   LoginUser(User: UserLogin): Observable<any> {
     return this.http.post<any>(developmentURI.loginUserURI, User);
   }
@@ -18,7 +21,10 @@ export class UserService {
   resendOTP(email: any): Observable<OTP> {
     return this.http.post<OTP>(developmentURI.resendOTPURI, email);
   }
-  updateUser(updatedDet : UserRegister, userid: number){
-    return this.http.put(`${developmentURI.registerUserURI}/update/${userid}`, updatedDet);
+  updateUser(updatedDet: UserRegister, userid: number) {
+    return this.http.put(
+      `${developmentURI.registerUserURI}/update/${userid}`,
+      updatedDet
+    );
   }
 }

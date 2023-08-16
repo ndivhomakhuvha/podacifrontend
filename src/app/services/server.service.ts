@@ -8,8 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ServerService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   getServerById(userId: number) {
     return this.http.get<Server[]>(`${developmentURI.serversByID}/${userId}`);
   }
@@ -23,8 +22,10 @@ export class ServerService {
     return this.http.delete(`${developmentURI.deleteOne}/${server_id}`);
   }
 
-
   createServer(serverData: CreateServer): Observable<any> {
     return this.http.post(developmentURI.createServer, serverData);
+  }
+  createHttpsServer(serverData: CreateServer): Observable<any> {
+    return this.http.post(developmentURI.createServerWithHttps, serverData);
   }
 }

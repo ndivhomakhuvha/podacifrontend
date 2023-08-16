@@ -6,10 +6,9 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-
 export class ChatService {
   constructor(private http: HttpClient) {}
-  textGPT(message: GPT):Observable<GPT> {
+  textGPT(message: GPT): Observable<GPT> {
     return this.http.post<GPT>(developmentURI.chatgpt, message);
   }
 }

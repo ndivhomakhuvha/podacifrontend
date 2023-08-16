@@ -1,4 +1,4 @@
-const baseUrl: string = 'http://localhost:3000';
+const baseUrl: string = 'https://podaci.onrender.com';
 export const environment = {
   user: `${baseUrl}/api/user`,
   server: `${baseUrl}/api/server`,
@@ -12,5 +12,6 @@ export const developmentURI = {
   serversByID: `${environment.server}`,
   pingServer: `${environment.server}/update`,
   deleteOne: `${environment.server}`,
-  createServer: environment.server
-}
+  createServer: environment.server,
+  createServerWithHttps: `${environment.server}/with-https`,
+};

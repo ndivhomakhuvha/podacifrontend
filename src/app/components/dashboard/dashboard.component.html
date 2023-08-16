@@ -365,9 +365,25 @@
             />
             <input
               type="text"
+              class="input_ip"
               placeholder="IP Address"
               formControlName="ipadress"
             />
+            <div class="ip_address_type">
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckChecked"
+                  formControlName="isToggleChecked"
+                />
+                <label class="form-check-label" for="flexSwitchCheckChecked"
+                  >Https Link?</label
+                >
+              </div>
+            </div>
+
             <input
               type="text"
               placeholder="Server name"
