@@ -1,5 +1,11 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormControlName,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
@@ -69,11 +75,27 @@ export class LoginComponent {
     }
   }
   submitForm() {
-    console.log(this.form.value)
+    console.log(this.form.value);
     this.userService.LoginUser(this.form.value).subscribe({
       next: (data) => {
         localStorage.setItem('user', JSON.stringify(data));
-        this.router.navigate(['/otp'])
+        this.router.navigate(['/otp']);
+      },
+      error: (err) => {
+        this.creditsFalse = true;
+      },
+    });
+  }
+  loginAsGuest() {
+    let userObject = {
+      email: 'Admin@boxprojects.com',
+      password: '12345678',
+    };
+  
+    this.userService.guestSignIn(userObject).subscribe({
+      next: (data) => {
+        localStorage.setItem('user', JSON.stringify(data));
+        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         this.creditsFalse = true;
@@ -81,12 +103,11 @@ export class LoginComponent {
     });
   }
   submitFormRegister() {
-
     this.userService.RegisterUser(this.formRegister.value).subscribe({
       next: (data) => {
         this.registered = true;
         this.accountExists = false;
-        Object.keys(this.formRegister.controls).forEach(key => {
+        Object.keys(this.formRegister.controls).forEach((key) => {
           this.formRegister.controls[key].setValue('');
         });
       },
@@ -96,5 +117,4 @@ export class LoginComponent {
       },
     });
   }
-  
 }

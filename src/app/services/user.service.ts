@@ -27,4 +27,7 @@ export class UserService {
       updatedDet
     );
   }
+  guestSignIn(User: UserLogin): Observable<any> {
+    return this.http.post<any>(developmentURI.guestLogin, User);
+  }
 }
