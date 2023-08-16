@@ -14,4 +14,5 @@ export const developmentURI = {
   deleteOne: `${environment.server}`,
   createServer: environment.server,
   createServerWithHttps: `${environment.server}/with-https`,
+  guestLogin: `${environment.user}/guest_sign`
 };
