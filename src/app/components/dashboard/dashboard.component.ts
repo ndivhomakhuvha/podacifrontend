@@ -107,7 +107,7 @@ export class DashboardComponent {
       name: [''],
       memory: [''],
       type: [''],
-      user_id: [this.user?.userId],
+      user_id: [''],
       isToggleChecked: [false],
     });
     this.formUpdate = this.fb.group({
@@ -221,6 +221,7 @@ export class DashboardComponent {
   }
 
   async addServer() {
+    this.formAddServer.get('user_id')?.setValue(this.user.userId);
     let httpsOn = this.formAddServer.get('isToggleChecked')?.value;
 
     let url;
