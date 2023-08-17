@@ -54,9 +54,15 @@
               Password should have at least 8 characters.
             </div>
 
-            <button>Login</button>
+            <button>Login   <div class="spinner-border" *ngIf="userLogin" role="status">
+             
+            </div></button>
           </form>
-          <button class="guest" (click)="loginAsGuest()">Login as Guest <ion-icon name="person-circle"></ion-icon></button>
+          <button class="guest" (click)="loginAsGuest()">Login as Guest <ion-icon name="person-circle"></ion-icon>
+          
+            <div *ngIf="guestLogin" class="spinner-border" role="status">
+             
+            </div></button>
 
           <div class="alert alert-danger" role="alert" *ngIf="creditsFalse == true">
             Entered wrong credits!
@@ -112,7 +118,12 @@
               Password should have at least 8 characters.
             </div>
 
-            <button>Register</button>
+            <button>Register
+
+              <div class="spinner-border" role="status">
+             
+            </div>
+            </button>
           </form>
 
           <div class="alert alert-success" role="alert" *ngIf="registered">

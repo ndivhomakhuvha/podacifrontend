@@ -51,6 +51,7 @@ export class DashboardComponent {
   currentDate: Date = new Date();
   day: number = this.currentDate.getDate();
   alreadyExists: boolean = false;
+  sendingMessage:boolean = false;
 
   month: string = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(
     this.currentDate
@@ -171,9 +172,12 @@ export class DashboardComponent {
   }
 
   async chatWithGpt() {
+    this.sendingMessage = true;
     this.mymessage.push(this.form.value);
     await this.gpt.textGPT(this.form.value).subscribe((data: GPT) => {
+      this.sendingMessage = false;
       this.messages.push(data);
+      
     });
     Object.keys(this.form.controls).forEach((key) => {
       this.form.controls[key].setValue('');

@@ -23,6 +23,9 @@ export class LoginComponent {
   creditsFalse: boolean = false;
   registered: boolean = false;
   accountExists: boolean = false;
+  guestLogin: boolean = false;
+  userLogin:boolean = false;
+  userRegister:boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -75,43 +78,53 @@ export class LoginComponent {
     }
   }
   submitForm() {
+    this.userLogin = true;
     console.log(this.form.value);
     this.userService.LoginUser(this.form.value).subscribe({
       next: (data) => {
         localStorage.setItem('user', JSON.stringify(data));
+        this.userLogin = false;
         this.router.navigate(['/otp']);
       },
       error: (err) => {
+        this.userLogin = false;
         this.creditsFalse = true;
       },
     });
   }
   loginAsGuest() {
+    this.guestLogin = true;
     let userObject = {
       email: 'Admin@boxprojects.com',
       password: '12345678',
     };
+
   
     this.userService.guestSignIn(userObject).subscribe({
       next: (data) => {
         localStorage.setItem('user', JSON.stringify(data));
+        this.guestLogin = false;
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         this.creditsFalse = true;
+        this.guestLogin = false;
       },
     });
   }
   submitFormRegister() {
+    this.userRegister = true;
     this.userService.RegisterUser(this.formRegister.value).subscribe({
       next: (data) => {
         this.registered = true;
         this.accountExists = false;
+        this.userRegister = false;
         Object.keys(this.formRegister.controls).forEach((key) => {
           this.formRegister.controls[key].setValue('');
         });
       },
       error: (err) => {
+        this.userRegister = false;
         this.accountExists = true;
         this.registered = false;
       },

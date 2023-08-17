@@ -665,7 +665,11 @@
       justify-content: space-evenly;
       position: absolute;
       bottom: 3px;
-
+      .spinner-border{
+        height: 18px;
+        width: 18px;
+     
+      }
       input {
         height: 45px;
         width: 65%;
