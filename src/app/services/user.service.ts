@@ -4,7 +4,7 @@ import {
   developmentURI,
   environment,
 } from 'src/environments/environment.development';
-import { OTP, UserLogin, UserRegister } from '../Types/User';
+import { GuestLogin, OTP, UserLogin, UserRegister } from '../Types/User';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -27,7 +27,7 @@ export class UserService {
       updatedDet
     );
   }
-  guestSignIn(User: UserLogin): Observable<any> {
-    return this.http.post<any>(developmentURI.guestLogin, User);
+  guestSignIn(User: UserLogin): Observable<GuestLogin> {
+    return this.http.post<GuestLogin>(developmentURI.guestLogin, User);
   }
 }

@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { OTP } from '../Types/User';
+import { GuestLogin, OTP } from '../Types/User';
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  userString: any;
-  user: OTP;
+  accessToken: any;
+  user?: GuestLogin;
+  constructor() {}
+  isAuthenticated(): Boolean {
+    this.accessToken = localStorage.getItem('user');
+    if (this.accessToken != null) {
+      this.user = JSON.parse(this.accessToken) as GuestLogin | OTP;
+      const accessTokenValue = this.user.token;
 
-  constructor(public jwtHelper: JwtHelperService) {}
-  public isAuthenticated(): boolean {
-    this.userString = localStorage.getItem('user');
-    this.user = JSON.parse(this.userString) as OTP;
-    const token = this.user.token;
-    return !this.jwtHelper.isTokenExpired(token);
+      return !!accessTokenValue;
+    }
+    return false;
   }
 }

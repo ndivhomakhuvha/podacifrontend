@@ -19,3 +19,10 @@ export interface updateDto {
   email: string;
   userId: number;
 }
+
+export interface GuestLogin {
+  email:    string;
+  username: string;
+  userId:   number;
+  token:    string;
+}
