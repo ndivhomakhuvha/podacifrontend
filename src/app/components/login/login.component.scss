@@ -44,7 +44,7 @@
             ion-icon {
               font-size: 24px;
             }
-            .spinner-border{
+            .spinner-border {
               height: 18px;
               width: 18px;
               position: relative;
@@ -134,17 +134,22 @@
               -webkit-box-shadow: 0 0 0 30px white inset !important;
             }
 
-            ion-icon {
-              font-size: 20px;
-              position: relative;
-            }
-
             .valid {
               color: green;
+              position: absolute;
+              right: 10px;
             }
 
             .invalid {
               color: black;
+              position: absolute;
+              right: 13px;
+              font-size: 18px;
+            }
+            #ion {
+              position: absolute;
+              right: 13px;
+              font-size: 18px;
             }
           }
 
@@ -161,10 +166,9 @@
             outline: none;
             font-weight: 600;
             gap: 3px;
-            .spinner-border{
+            .spinner-border {
               height: 18px;
               width: 18px;
-        
             }
           }
 
