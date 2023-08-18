@@ -26,6 +26,7 @@ export class LoginComponent {
   guestLogin: boolean = false;
   userLogin:boolean = false;
   userRegister:boolean = false;
+  
 
   constructor(
     private fb: FormBuilder,

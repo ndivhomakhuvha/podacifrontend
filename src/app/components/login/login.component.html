@@ -7,6 +7,7 @@
       <div class="formContainer">
         <h1 *ngIf="signIn">Login Here</h1>
         <h1 *ngIf="SignUp">Register Account</h1>
+  
         <p>Welcome back, Please enter your details.</p>
         <div class="buttonContainer">
           <button [ngClass]="signIn ? 'sign_in_button' : 'sign_up_button'" (click)="showSignIn()">
