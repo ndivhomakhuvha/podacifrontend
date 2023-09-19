@@ -24,8 +24,8 @@ export class LoginComponent {
   registered: boolean = false;
   accountExists: boolean = false;
   guestLogin: boolean = false;
-  userLogin:boolean = false;
-  userRegister:boolean = false;
+  userLogin: boolean = false;
+  userRegister: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -95,11 +95,10 @@ export class LoginComponent {
   loginAsGuest() {
     this.guestLogin = true;
     let userObject = {
-      email: 'Admin@boxprojects.com',
-      password: '12345678',
+      email: 'admin@gmail.com',
+      password: 'admin@1234',
     };
 
-  
     this.userService.guestSignIn(userObject).subscribe({
       next: (data) => {
         localStorage.setItem('user', JSON.stringify(data));
