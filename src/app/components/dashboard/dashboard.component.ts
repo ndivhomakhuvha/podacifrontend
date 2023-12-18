@@ -51,7 +51,8 @@ export class DashboardComponent {
   currentDate: Date = new Date();
   day: number = this.currentDate.getDate();
   alreadyExists: boolean = false;
-  sendingMessage:boolean = false;
+  sendingMessage: boolean = false;
+  isAdmin: boolean = false;
 
   month: string = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(
     this.currentDate
@@ -72,6 +73,7 @@ export class DashboardComponent {
     this.userString = localStorage.getItem('user');
     this.user = JSON.parse(this.userString) as OTP;
     this.usernameUser = this.user.username;
+    this.isAdmin = this.user.email == 'admin@gmail.com' ? true : false;
 
     this.serverService.getServerById(this.user.userId).subscribe((data) => {
       data.forEach((item) => {
@@ -177,7 +179,6 @@ export class DashboardComponent {
     await this.gpt.textGPT(this.form.value).subscribe((data: GPT) => {
       this.sendingMessage = false;
       this.messages.push(data);
-      
     });
     Object.keys(this.form.controls).forEach((key) => {
       this.form.controls[key].setValue('');
@@ -299,15 +300,15 @@ export class DashboardComponent {
 
   filterSearch(status: any) {
     if (!this.serversCopy) {
-      this.serversCopy = [...this.servers]; // Create a copy of the original servers array
+      this.serversCopy = [...this.servers];
     }
 
-    if (status) {
+    if (status !== undefined && status !== null) {
       this.filter = this.serversCopy.filter((item: Server) => {
         return item.status === status;
       });
     } else {
-      this.filter = this.serversCopy.slice(); // Create a copy of the serversCopy array to display all items
+      this.filter = this.serversCopy.slice();
     }
 
     this.servers = this.filter;
@@ -315,6 +316,19 @@ export class DashboardComponent {
 
     return this.filter;
   }
+
+  onFilterChange(event: any) {
+    const selectedValue = event.target.value;
+  
+    if (selectedValue === '1') {
+      this.filterSearch(null); // All
+    } else if (selectedValue === '2') {
+      this.filterSearch('SERVER UP'); // Active
+    } else if (selectedValue === '3') {
+      this.filterSearch('SERVER DOWN'); // Offline
+    }
+  }
+  
 
   onSelect(event: { addedFiles: any }) {
     this.files.push(...event.addedFiles);

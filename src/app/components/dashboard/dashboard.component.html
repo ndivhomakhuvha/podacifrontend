@@ -27,12 +27,14 @@
       <p
         (click)="showAnalyticsMethod()"
         [ngClass]="showAnalytics ? 'clicked' : 'not_clicked'"
+        *ngIf="!isAdmin"
       >
         <ion-icon name="analytics"></ion-icon>Analytics
       </p>
       <p
         (click)="showSettingsMethod()"
         [ngClass]="showSettings ? 'clicked' : 'not_clicked'"
+        *ngIf="!isAdmin"
       >
         <ion-icon name="settings"></ion-icon>Settings
       </p>
@@ -144,15 +146,15 @@
           <h1>Manage Servers</h1>
         </div>
         <div class="adding">
-          <select class="form-select" aria-label="Default select example">
+          <select
+            class="form-select"
+            aria-label="Default select example"
+            (change)="onFilterChange($event)"
+          >
             <option selected>Filter</option>
-            <option value="1" (click)="filterSearch(null)">All</option>
-            <option value="2" (click)="filterSearch('SERVER UP')">
-              Active
-            </option>
-            <option value="3" (click)="filterSearch('SERVER DOWN')">
-              Offline
-            </option>
+            <option value="1">All</option>
+            <option value="2">Active</option>
+            <option value="3">Offline</option>
           </select>
 
           <button
@@ -317,7 +319,6 @@
           <span class="visually-hidden">Loading...</span>
         </div>
         <ion-icon *ngIf="!sendingMessage" name="send" type="submit"></ion-icon>
-       
       </div>
     </form>
   </div>
@@ -332,7 +333,6 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-        
           <img
             src="https://res.cloudinary.com/dxnpgxqlg/image/upload/v1686408181/original-b47fd46878972efc7d4283cef54dc984-removebg-preview_yzagsb.png"
             alt=""
@@ -381,10 +381,12 @@
                   id="flexSwitchCheckChecked"
                   formControlName="isToggleChecked"
                 />
-                <label class="form-check-label" for="flexSwitchCheckChecked" title="Turn on if you are on live site"
-                  >Https Link? 
-               </label
-                >
+                <label
+                  class="form-check-label"
+                  for="flexSwitchCheckChecked"
+                  title="Turn on if you are on live site"
+                  >Https Link?
+                </label>
               </div>
             </div>
 
