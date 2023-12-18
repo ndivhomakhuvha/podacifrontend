@@ -96,7 +96,7 @@ export class LoginComponent {
     this.guestLogin = true;
     let userObject = {
       email: 'admin@gmail.com',
-      password: 'admin@1234',
+      password: '12345678',
     };
 
     this.userService.guestSignIn(userObject).subscribe({
@@ -105,7 +105,7 @@ export class LoginComponent {
         this.guestLogin = false;
         this.router.navigate(['/dashboard']);
       },
-      error: (err) => {
+      error: (err: any) => {
         this.creditsFalse = true;
         this.guestLogin = false;
       },
@@ -114,7 +114,7 @@ export class LoginComponent {
   submitFormRegister() {
     this.userRegister = true;
     this.userService.RegisterUser(this.formRegister.value).subscribe({
-      next: (data) => {
+      next: (data: any) => {
         this.registered = true;
         this.accountExists = false;
         this.userRegister = false;
