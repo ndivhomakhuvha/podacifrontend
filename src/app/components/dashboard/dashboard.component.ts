@@ -3,7 +3,7 @@ import { Toast } from 'bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GPT } from 'src/app/Types/GPT';
 import { Server } from 'src/app/Types/Servers';
-import { OTP, updateDto } from 'src/app/Types/User';
+import { OTP, UserDetailsStorage, updateDto } from 'src/app/Types/User';
 import { ChatService } from 'src/app/services/chat.service';
 import { ServerService } from 'src/app/services/server.service';
 import { UserService } from 'src/app/services/user.service';
@@ -37,7 +37,8 @@ export class DashboardComponent {
   selectedFilter: any;
   currentTime: string = `${new Date().getHours()}:${new Date().getMinutes()} `;
   updatedUser?: updateDto;
-  user: OTP;
+  user: any;
+  userDetails : UserDetailsStorage;
   messages: any[] = [];
   mymessage: any[] = [];
   usernameUser: string = '';
@@ -70,12 +71,19 @@ export class DashboardComponent {
   passwordHidden: boolean = false;
 
   ngOnInit() {
-    this.userString = localStorage.getItem('user');
-    this.user = JSON.parse(this.userString) as OTP;
-    this.usernameUser = this.user.username;
-    this.isAdmin = this.user.email == 'admin@gmail.com' ? true : false;
 
-    this.serverService.getServerById(this.user.userId).subscribe((data) => {
+    this.userString = localStorage.getItem('user_details');
+    this.userDetails = JSON.parse(this.userString) as UserDetailsStorage;
+    this.usernameUser = this.userDetails.username;
+    this.isAdmin = this.userDetails.email == 'admin@gmail.com' ? true : false;
+
+    let value = localStorage.getItem('user');
+    let user_id;
+    if (value != null) {
+      user_id = JSON.parse(value) as OTP;
+    }
+
+    this.serverService.getServerById(user_id?.userId).subscribe((data) => {
       data.forEach((item) => {
         if (item.status == 'SERVER UP') {
           this.serverUpLength++;
@@ -101,8 +109,9 @@ export class DashboardComponent {
     this.form = this.fb.group({
       message: [''],
     });
-    this.userString = localStorage.getItem('user');
-    this.user = JSON.parse(this.userString) as OTP;
+    this.userString = localStorage.getItem('user_details');
+    this.user = localStorage.getItem('user');
+    this.userDetails = JSON.parse(this.userString) as UserDetailsStorage;
 
     this.formAddServer = this.fb.group({
       imageurl: [''],
@@ -114,8 +123,8 @@ export class DashboardComponent {
       isToggleChecked: [false],
     });
     this.formUpdate = this.fb.group({
-      username: [this.user.username],
-      email: [this.user.email],
+      username: [this.userDetails.username],
+      email: [this.userDetails.email],
       password: ['12345678'],
     });
   }
@@ -138,18 +147,20 @@ export class DashboardComponent {
       this.showHelp = false;
       this.userString = localStorage.getItem('user');
       this.user = JSON.parse(this.userString) as OTP;
-      this.usernameUser = this.user.username;
       this.serverService.getServerById(this.user.userId).subscribe((data) => {
         this.servers = data;
       });
     }
   }
   getServers() {
-    this.userString = localStorage.getItem('user');
-    this.user = JSON.parse(this.userString) as OTP;
-    this.usernameUser = this.user.username;
+    let value = localStorage.getItem('user');
+    let user_id;
+    if (value != null) {
+      user_id = JSON.parse(value) as OTP;
+    }
 
-    this.serverService.getServerById(this.user.userId).subscribe((data) => {
+
+    this.serverService.getServerById(user_id?.userId).subscribe((data) => {
       this.servers = data;
     });
   }
@@ -365,20 +376,20 @@ export class DashboardComponent {
     }
   }
   updateActualDetails() {
-    this.userString = localStorage.getItem('user');
-    this.user = JSON.parse(this.userString) as OTP;
+    this.userString = localStorage.getItem('user_details');
+    this.userDetails = JSON.parse(this.userString) as UserDetailsStorage;
     this.userService
       .updateUser(this.formUpdate.value, this.user?.userId)
       .subscribe({
         next: (data) => {
           this.updatedUser = data as updateDto;
-          this.user.email = this.updatedUser.email;
-          this.user.username = this.updatedUser.username;
+          this.userDetails.email = this.updatedUser.email;
+          this.userDetails.username = this.updatedUser.username;
           this.updatedUserDetails = true;
-          localStorage.setItem('user', JSON.stringify(this.user));
+          localStorage.setItem('user_details', JSON.stringify(this.userDetails));
         },
         error: (err) => {
-          this.user = this.user;
+          this.userDetails = this.userDetails;
           this.updatedUserDetails = false;
         },
       });

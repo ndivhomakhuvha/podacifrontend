@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { OTP } from 'src/app/Types/User';
+import { OTP, verifyTheOTP } from 'src/app/Types/User';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -15,68 +15,59 @@ export class OTPPageComponent {
   email: String = '';
   userString: any;
   user?: OTP;
-  constructor(private router: Router, private userService: UserService) { }
+  constructor(private router: Router, private userService: UserService) {}
 
-  ngOnInit() {
-    this.userString = localStorage.getItem('user');
-    this.user = JSON.parse(this.userString) as OTP;
-    this.email = this.user.email;
-    console.log(this.user);
-  }
+  ngOnInit() {}
 
-  submit() {
+  async submit() {
     const inputs = document.querySelectorAll('input');
     const inputArr = Array.from(inputs);
     let string = '';
+  
     for (let i = 0; i < inputArr.length; i++) {
       string += inputArr[i].value;
     }
-    if (string === String(this.user?.number)) {
-      this.router.navigate(['/dashboard']);
-    } else {
-      this.wrongOTP = true;
-      this.oldOTP = false;
-      inputArr.forEach((item) => {
-        item.setAttribute('class', 'errorOTP');
-      });
-    }
-  }
-
-  moveNext() {
-    const inputs = document.querySelectorAll('input');
-    const inputArr = Array.from(inputs);
-
-    if (inputArr[0].value.length === 1) {
-      inputArr[1].focus();
-    }
-    if (inputArr[1].value.length === 1) {
-      inputArr[2].focus();
-    }
-
-    if (inputArr[2].value.length === 1) {
-      inputArr[3].focus();
-    }
-  }
-
-  resendOTP() {
-    let object = {
-      email: this.user?.email,
+  
+    let otpObject: verifyTheOTP = {
+      otp: Number(string),
     };
-
-    this.userService.resendOTP(object).subscribe({
+  
+    this.userService.verifyOtp(otpObject).subscribe({
       next: (data) => {
-        localStorage.setItem('user', JSON.stringify(data));
-        this.wrongOTP = false;
-        this.oldOTP = false;
-        this.newOTP = true;
-        this.ngOnInit();
+        localStorage.setItem('user_details', JSON.stringify(data));
+        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
+        this.wrongOTP = true;
         this.oldOTP = false;
-        this.newOTP = false;
-        console.log(err);
-        this.wrongOTP = false;
+        inputArr.forEach((item) => {
+          item.setAttribute('class', 'errorOTP');
+        });
       },
     });
+  }
+  
+
+  @ViewChild('inputOTP') inputOTP: ElementRef;
+
+  moveNext(event: KeyboardEvent, index: number) {
+    const inputArr = this.inputOTP.nativeElement.querySelectorAll('input');
+    const input = inputArr[index] as HTMLInputElement;
+
+    if (event.key === 'Backspace' && index > 0) {
+      const prevInput = inputArr[index - 1] as HTMLInputElement;
+      prevInput.focus();
+    } else if (index < inputArr.length - 1 && input.value.length === 1) {
+      const nextInput = inputArr[index + 1] as HTMLInputElement;
+      nextInput.focus();
+    }
+  }
+
+  moveBack(event: KeyboardEvent, index: number) {
+    if (event.key === 'Backspace' && index > 0) {
+      const inputArr = document.querySelectorAll('.inputOTP input');
+      const prevInput = inputArr[index - 1] as HTMLInputElement;
+      prevInput.focus();
+    }
   }
 }

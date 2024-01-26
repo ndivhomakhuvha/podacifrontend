@@ -11,15 +11,15 @@
         OTP has been resent to your email: {{ email }}
     </div>
     <h1>Enter OTP to Verify</h1>
-    <div class="inputOTP">
-        <input type="text" maxlength="1" (keyup)="moveNext()">
-        <input type="text" maxlength="1" (keyup)="moveNext()">
-        <input type="text" maxlength="1" (keyup)="moveNext()">
-        <input type="text" maxlength="1">
-    </div>
+    <div class="inputOTP" #inputOTP>
+        <input type="text" maxlength="1" (keyup)="moveNext($event, 0)">
+        <input type="text" maxlength="1" (keyup)="moveNext($event, 1)">
+        <input type="text" maxlength="1" (keyup)="moveNext($event, 2)">
+        <input type="text" maxlength="1" (keyup)="moveBack($event, 2)">
+      </div>
     <div class="resend">
         <button (click)="submit()" class="resendButtonSubmit">Submit</button>
-        <button class="resendButton" (click)="resendOTP()">Resend OTP</button>
+        <button class="resendButton">Resend OTP</button>
     </div>
 
     <div class="alert alert-danger" role="alert" *ngIf="wrongOTP">

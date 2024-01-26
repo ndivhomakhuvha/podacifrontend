@@ -6,14 +6,14 @@ import { GuestLogin, OTP } from '../Types/User';
 })
 export class AuthService {
   accessToken: any;
-  user?: GuestLogin;
+  user?: OTP;
   constructor() {}
   isAuthenticated(): Boolean {
     this.accessToken = localStorage.getItem('user');
     if (this.accessToken != null) {
-      this.user = JSON.parse(this.accessToken) as GuestLogin | OTP;
+      this.user = JSON.parse(this.accessToken) as  OTP;
       const accessTokenValue = this.user.token;
-
+  
       return !!accessTokenValue;
     }
     return false;

@@ -10,7 +10,6 @@
     padding: 20px;
     border-right: 1px solid rgba(128, 128, 128, 0.105);
   
-
     .sidebar_footer {
       position: absolute;
       bottom: 0;
@@ -307,6 +306,11 @@
           flex-direction: row;
           justify-content: center;
           gap: 10px;
+          button{
+           .flash{
+              color: rgb(68, 2, 112);
+            }
+          }
 
           .form-select {
             width: 120px !important;

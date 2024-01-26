@@ -8,18 +8,21 @@ export interface UserRegister {
   password?: string;
 }
 export interface OTP {
-  email: string;
-  username: string;
-  number: number;
   userId: number;
   token: string;
+}
+export interface UserDetailsStorage{
+  email: string;
+  username: string;
 }
 export interface updateDto {
   username: string;
   email: string;
   userId: number;
 }
-
+export interface verifyTheOTP {
+  otp:number
+}
 export interface GuestLogin {
   email:    string;
   username: string;

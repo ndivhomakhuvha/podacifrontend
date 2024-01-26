@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'homepage', component: HomepageComponent },
   { path: 'login', component: LoginComponent },
   { path: 'otp', component: OTPPageComponent, canActivate:[AuthGuard] },
-  { path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuard] },
+  { path: 'dashboard', component: DashboardComponent },
 ];
 
 @NgModule({
