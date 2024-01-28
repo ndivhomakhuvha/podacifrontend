@@ -9,7 +9,8 @@ export class AuthService {
   user?: OTP;
   constructor() {}
   isAuthenticated(): Boolean {
-    this.accessToken = localStorage.getItem('user');
+    this.accessToken = localStorage.getItem('user') || localStorage.getItem('guest_user');
+    
     if (this.accessToken != null) {
       this.user = JSON.parse(this.accessToken) as  OTP;
       const accessTokenValue = this.user.token;

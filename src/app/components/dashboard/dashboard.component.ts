@@ -72,12 +72,15 @@ export class DashboardComponent {
 
   ngOnInit() {
 
-    this.userString = localStorage.getItem('user_details');
-    this.userDetails = JSON.parse(this.userString) as UserDetailsStorage;
-    this.usernameUser = this.userDetails.username;
-    this.isAdmin = this.userDetails.email == 'admin@gmail.com' ? true : false;
+    this.userString = localStorage.getItem('user_details') || localStorage.getItem('guest_user');
+    if(this.userString != null){
+      this.userDetails = JSON.parse(this.userString) as UserDetailsStorage;
+      this.usernameUser = this.userDetails.username;
+      this.isAdmin = this.userDetails.email == 'admin@gmail.com' ? true : false;
+    }
+ 
 
-    let value = localStorage.getItem('user');
+    let value = localStorage.getItem('user') || localStorage.getItem('guest_user');
     let user_id;
     if (value != null) {
       user_id = JSON.parse(value) as OTP;
@@ -109,8 +112,8 @@ export class DashboardComponent {
     this.form = this.fb.group({
       message: [''],
     });
-    this.userString = localStorage.getItem('user_details');
-    this.user = localStorage.getItem('user');
+    this.userString = localStorage.getItem('user_details')  || localStorage.getItem('guest_user');
+    this.user = localStorage.getItem('user')  || localStorage.getItem('guest_user');
     this.userDetails = JSON.parse(this.userString) as UserDetailsStorage;
 
     this.formAddServer = this.fb.group({
@@ -145,7 +148,7 @@ export class DashboardComponent {
       this.showAnalytics = false;
       this.showSettings = false;
       this.showHelp = false;
-      this.userString = localStorage.getItem('user');
+      this.userString = localStorage.getItem('user')  || localStorage.getItem('guest_user');
       this.user = JSON.parse(this.userString) as OTP;
       this.serverService.getServerById(this.user.userId).subscribe((data) => {
         this.servers = data;
@@ -153,7 +156,7 @@ export class DashboardComponent {
     }
   }
   getServers() {
-    let value = localStorage.getItem('user');
+    let value = localStorage.getItem('user')  || localStorage.getItem('guest_user');
     let user_id;
     if (value != null) {
       user_id = JSON.parse(value) as OTP;
@@ -376,7 +379,7 @@ export class DashboardComponent {
     }
   }
   updateActualDetails() {
-    this.userString = localStorage.getItem('user_details');
+    this.userString = localStorage.getItem('user_details') ;
     this.userDetails = JSON.parse(this.userString) as UserDetailsStorage;
     this.userService
       .updateUser(this.formUpdate.value, this.user?.userId)

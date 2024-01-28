@@ -101,7 +101,7 @@ export class LoginComponent {
 
     this.userService.guestSignIn(userObject).subscribe({
       next: (data) => {
-        localStorage.setItem('user', JSON.stringify(data));
+        localStorage.setItem('guest_user', JSON.stringify(data));
         this.guestLogin = false;
         this.router.navigate(['/dashboard']);
       },
