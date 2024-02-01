@@ -100,7 +100,7 @@ export class ChartComponent {
     let x = this.initializeChart()
     this.chartString = x.chartOptions;
     if (window.innerHeight < 900) {
-      x.chartOptions.width = 650;
+      x.chartOptions.width = 700;
     }
     else {
       x.chartOptions.width = 950;
