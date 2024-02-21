@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Server } from 'src/app/Types/Servers';
+import { OTP } from 'src/app/Types/User';
+import { ServerService } from 'src/app/services/server.service';
 
 @Component({
   selector: 'app-chart',
@@ -8,19 +11,56 @@ import { Component } from '@angular/core';
 export class ChartComponent {
   chartString: any;
   chart: any;
+  servers: Server[] = [];
+
+  constructor(private serverService: ServerService) {}
+
+  async getServers() {
+    let value =
+      localStorage.getItem('user') || localStorage.getItem('guest_user');
+    let user_id;
+    if (value != null) {
+      user_id = JSON.parse(value) as OTP;
+    }
+
+    await this.serverService
+      .getServerById(user_id?.userId)
+      .subscribe((data) => {
+        this.servers = data;
+        this.initializeChart();
+      });
+  }
+
+  ngOnInit() {
+    this.getServers();
+    this.initializeChart();
+    let x = this.initializeChart();
+    this.chartString = x.chartOptions;
+    if (window.innerHeight < 900) {
+      x.chartOptions.width = 750;
+    } else {
+      x.chartOptions.width = 950;
+    }
+  }
+
   initializeChart = () => {
+    if (this.servers.length != 0) {
+      console.log(this.servers);
+    }
+
     let chartOptions = {
       animationEnabled: true,
       theme: 'light2',
-      height: 250,
-      width: 800,
-      exportFileName: "Network Perfomance.pdf",  //Give any name accordingly
+      height: 0,
+      width: 0,
+      exportFileName: 'Network Perfomance.pdf', //Give any name accordingly
       exportEnabled: true,
       title: {
         text: 'Up vs Down Servers',
       },
       axisX: {
-        valueFormatString: 'D MMM',
+        title: 'Time',
+        suffix: ' s',
       },
       axisY: {
         title: 'Number of Servers',
@@ -47,64 +87,17 @@ export class ChartComponent {
           type: 'line',
           showInLegend: true,
           name: 'Up Servers',
-          xValueFormatString: 'MMM DD, YYYY',
-          dataPoints: [
-            { x: new Date(2021, 8, 1), y: 63 },
-            { x: new Date(2021, 8, 2), y: 69 },
-            { x: new Date(2021, 8, 3), y: 65 },
-            { x: new Date(2021, 8, 4), y: 70 },
-            { x: new Date(2021, 8, 5), y: 71 },
-            { x: new Date(2021, 8, 6), y: 65 },
-            { x: new Date(2021, 8, 7), y: 73 },
-            { x: new Date(2021, 8, 8), y: 86 },
-            { x: new Date(2021, 8, 9), y: 74 },
-            { x: new Date(2021, 8, 10), y: 75 },
-            { x: new Date(2021, 8, 11), y: 76 },
-            { x: new Date(2021, 8, 12), y: 84 },
-            { x: new Date(2021, 8, 13), y: 87 },
-            { x: new Date(2021, 8, 14), y: 76 },
-            { x: new Date(2021, 8, 15), y: 79 },
-          ],
+          xValueFormatString: '#### sec',
+          dataPoints: [{ x: 0, y: 0 }],
         },
         {
           type: 'line',
           showInLegend: true,
           name: 'Down Servers',
-          dataPoints: [
-            { x: new Date(2021, 8, 1), y: 60 },
-            { x: new Date(2021, 8, 2), y: 57 },
-            { x: new Date(2021, 8, 3), y: 51 },
-            { x: new Date(2021, 8, 4), y: 56 },
-            { x: new Date(2021, 8, 5), y: 54 },
-            { x: new Date(2021, 8, 6), y: 55 },
-            { x: new Date(2021, 8, 7), y: 54 },
-            { x: new Date(2021, 8, 8), y: 69 },
-            { x: new Date(2021, 8, 9), y: 65 },
-            { x: new Date(2021, 8, 10), y: 66 },
-            { x: new Date(2021, 8, 11), y: 63 },
-            { x: new Date(2021, 8, 12), y: 67 },
-            { x: new Date(2021, 8, 13), y: 66 },
-            { x: new Date(2021, 8, 14), y: 56 },
-            { x: new Date(2021, 8, 15), y: 64 },
-          ],
+          dataPoints: [{ x: new Date(2021, 8, 1), y: 60 }],
         },
       ],
     };
     return { chartOptions };
-  }
-
-
-  ngOnInit() {
-
-    this.initializeChart()
-    let x = this.initializeChart()
-    this.chartString = x.chartOptions;
-    if (window.innerHeight < 900) {
-      x.chartOptions.width = 750;
-    }
-    else {
-      x.chartOptions.width = 950;
-    }
-
-  }
+  };
 }
