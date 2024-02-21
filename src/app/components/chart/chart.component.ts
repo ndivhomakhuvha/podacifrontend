@@ -13,9 +13,11 @@ export class ChartComponent {
   chart: any;
   servers: Server[] = [];
 
+  chartOptions: any;
+
   constructor(private serverService: ServerService) {}
 
-  async getServers() {
+  getServers() {
     let value =
       localStorage.getItem('user') || localStorage.getItem('guest_user');
     let user_id;
@@ -23,31 +25,10 @@ export class ChartComponent {
       user_id = JSON.parse(value) as OTP;
     }
 
-    await this.serverService
-      .getServerById(user_id?.userId)
-      .subscribe((data) => {
-        this.servers = data;
-        this.initializeChart();
-      });
+    return this.serverService.getServerById(user_id?.userId);
   }
 
-  ngOnInit() {
-    this.getServers();
-    this.initializeChart();
-    let x = this.initializeChart();
-    this.chartString = x.chartOptions;
-    if (window.innerHeight < 900) {
-      x.chartOptions.width = 750;
-    } else {
-      x.chartOptions.width = 950;
-    }
-  }
-
-  initializeChart = () => {
-    if (this.servers.length != 0) {
-      console.log(this.servers);
-    }
-
+  initializeChart() {
     let chartOptions = {
       animationEnabled: true,
       theme: 'light2',
@@ -82,22 +63,72 @@ export class ChartComponent {
           e.chart.render();
         },
       },
+
       data: [
         {
           type: 'line',
           showInLegend: true,
           name: 'Up Servers',
           xValueFormatString: '#### sec',
-          dataPoints: [{ x: 0, y: 0 }],
+          dataPoints: [],
         },
         {
           type: 'line',
           showInLegend: true,
           name: 'Down Servers',
-          dataPoints: [{ x: new Date(2021, 8, 1), y: 60 }],
+          dataPoints: [],
         },
       ],
     };
+
     return { chartOptions };
-  };
+  }
+
+  updateChartData() {
+    const currentTime = Math.floor(Date.now() / 1000); // Convert milliseconds to seconds
+
+    const upServersCount = this.servers.filter(
+      (server) => server.status == 'SERVER UP'
+    ).length;
+
+    const downServersCount = this.servers.filter(
+      (server) => server.status == 'SERVER DOWN'
+    ).length;
+    console.log(upServersCount);
+
+    this.chartOptions.data[0].dataPoints.push({
+      x: currentTime,
+      y: upServersCount,
+    });
+    this.chartOptions.data[1].dataPoints.push({
+      x: currentTime,
+      y: downServersCount,
+    });
+
+    // Optional: Remove old data points to prevent the array from growing indefinitely
+    if (this.chartOptions.data[0].dataPoints.length > 20) {
+      this.chartOptions.data[0].dataPoints.shift();
+      this.chartOptions.data[1].dataPoints.shift();
+    }
+  }
+
+  ngOnInit() {
+    this.getServers().subscribe((data) => {
+      this.servers = data;
+      this.chartOptions = this.initializeChart().chartOptions;
+
+      // Start a timer to update the chart every second
+      setInterval(() => {
+        this.updateChartData();
+        this.initializeChart();
+        // Render the chart here if needed
+      }, 1000); 
+
+      if (window.innerHeight < 900) {
+        this.chartOptions.width = 750;
+      } else {
+        this.chartOptions.width = 950;
+      }
+    });
+  }
 }
